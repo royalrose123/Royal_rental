@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Royal Rental</title>
+
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/rental.css">
+</head>
+<body>
+    <header>
+        <nav id="nav" class="nav">
+        </nav>
+    </header>
+    <section id="rental" class="rental">
+        <div id="rentalLeft" class="rental_left">
+            <div id="map" class="map">
+
+            </div>
+        </div>
+        <div id="rentalRight" class="rental_right">
+            <div id="rentalTitle" class="retanl_title">
+                <div> 台北市 </div>
+                <div> > </div>
+                <div>行政區</div>
+            </div>
+            <div id="rentalFilter" class="rental_filter">
+                <div id="priceFilter" class="filter_type">
+                    <p id="filterTitle" class="filter_title">月租金</p>
+                    <div id="filterDetail" class="filter_detail price_chart">
+                        <div id="bar" class="bar"></div>
+                        <div id="control" class="control">
+                            <div id="circleLeft" class="circle left">
+                                <p id="moneyLeft" class="money"></p>
+                            </div>
+                            <div id="rangeLine" class="range_line"></div>
+                            <div id="bottomLine" class="bottom_line"></div>
+                            <div id="circleRight" class="circle right">
+                                <p id="moneyRight" class="money"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="roomAmountFilter" class="filter_type">
+                    <p id="filterTitle" class="filter_title">房間數量</p>
+                    <div id="filterDetail" class="filter_detail">
+                        <p id="roomAmount" class="room_amount">1</p>
+                        <p id="roomAmount" class="room_amount">2</p>
+                        <p id="roomAmount" class="room_amount">3</p>
+                        <p id="roomAmount" class="room_amount">4</p>
+                    </div>
+                </div>
+                <div id="kindFilter" class="filter_type">
+                    <p id="filterTitle" class="filter_title">房屋類型</p>
+                    <div id="filterDetail" class="filter_detail">
+                        <p id="roomKind" class="room_kind">雅房</p>
+                        <p id="roomKind" class="room_kind">獨立套房</p>
+                        <p id="roomKind" class="room_kind">整層住家</p>
+                    </div>
+                </div>
+            </div>
+            <div id="resultTitle" class="result_title">
+                <p>335筆結果</p>
+            </div>
+            <div id="resultHouse" class="result_house">
+                <div id="houseCard" class="house_card">
+                    <div id="houseImg" class="house_img"></div>
+                    <div id="houseDetail" class="house_detail">
+                        <div id="priceIcons" class="price_icons">
+                            <p id="price" class="price">10,100</p>
+                        </div>
+                        <p>1間房間、1間廁所、獨立套房</p>
+                        <p>大同區</p>
+                    </div>
+                </div>
+                <div id="houseCard" class="house_card">
+                    <div id="houseImg" class="house_img"></div>
+                    <div id="houseDetail" class="house_detail">
+                        <div id="priceIcons" class="price_icons">
+                            <p id="price" class="price">10,100</p>
+                        </div>
+                        <p>1間房間、1間廁所、獨立套房</p>
+                        <p>文山區</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<footer>
+    <script src="./js/lib.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/rental.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO1V4ilzKx8wxo6fJ0QgIskky6lcUUhSc&callback=initMap"
+    async defer></script>
+</footer>
+</html>
+    

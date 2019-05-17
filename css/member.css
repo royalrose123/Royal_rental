@@ -1,0 +1,173 @@
+ .member_poster{
+    width: 100%;
+    height: 380px;
+    background: url("../images//member_poster.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.member_poster >p{
+    width: 160px;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(128,128,128,0.7);
+    padding: 6px;
+    padding-left: 13px;
+    border-radius: 5px;
+    letter-spacing: 10px;
+    text-align: center;
+}
+
+.member{
+    width: 960px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 60px auto;
+}
+
+.member .member_bar{
+    width: 200px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.member .member_bar .member_bar_btn{
+    font-size: 16px;
+    color: white;
+    background-color: rgb(26, 216, 211);
+    width: 80px;
+    height: 16px;
+    line-height: 16px;
+    margin: 16px 0;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.member .member_display{
+    width: 600px;
+    height: 100%;
+    
+}
+
+/* member data css */
+.member .member_display .member_data{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.member .member_display .member_data .member_photo{
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    border-radius: 50%;
+    margin: 16px;
+}
+
+.member .member_display .member_data .member_data_row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.member .member_display .member_data .member_data_row .member_data_title{
+    width: 90px;
+}
+
+.member .member_display .member_data .member_data_row .member_input{
+    width: 300px;
+    height: 30px;
+    font-size: 16px;
+    padding: 0 8px;
+    letter-spacing: 1px;
+}
+
+.member .member_display .member_data .member_modify_btn{
+    font-size: 16px;
+    color: white;
+    background-color: rgb(26, 216, 211);
+    width: 80px;
+    height: 16px;
+    line-height: 16px;
+    margin: 16px 0;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* member fav house css */
+.member .member_display .member_fav_house{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.member .member_display .member_fav_house .fav_house{
+    width: 180px;
+    height: 180px;
+    margin: 8px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    position: relative;
+    border: 1px solid #bbbbbb;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.9s;
+}
+
+.member .member_display .member_fav_house .fav_house:hover{
+    transform: scale(1.05)
+}
+
+.member .member_display .member_fav_house .fav_house .house_img{
+    width: 100%;
+    height: 160px;
+    background: url("../images/006.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+.member .member_display .member_fav_house .fav_house .house_detail{
+    width: 100%;
+    height: 60px;
+    position: relative;
+    bottom: 40px;
+}
+
+.member .member_display .member_fav_house .fav_house .house_detail .price{
+    color: white;
+    font-size: 24px;
+    text-shadow: 1px 1px 10px black;
+}
+
+.member .member_display .member_fav_house .fav_house .house_detail > p {
+    font-size: 8px;
+    margin: 8px;
+}
+    

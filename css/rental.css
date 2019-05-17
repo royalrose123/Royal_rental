@@ -1,0 +1,236 @@
+.rental{
+/*
+    width: 100%;
+    height: calc(100% - 60px);
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 60px;
+*/
+    
+    height: calc(100% - 60px);
+    position: absolute;
+    top: 60px;
+    z-index: 200;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+/* rental left */
+.rental .rental_left{
+    width: calc(100% - 600px);
+    height: 100%;
+    position: relative;
+}
+
+.rental .rental_left .map{
+    width: 100%;
+    height: 100%;
+}
+
+/* rental right */
+.rental .rental_right{
+    width: 600px;
+    height: 100%;
+    background-color: #F7F7F7;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.rental .rental_right .retanl_title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 8px;
+}
+
+.rental .rental_right .rental_filter{
+/*
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+*/
+    
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.rental .rental_right .rental_filter .filter_type{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    
+    width: inherit;
+    border-bottom: solid 1px gray;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_title{
+    width: 29%;
+    margin: 8px;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    box-sizing: border-box;
+    margin: 8px;
+}
+
+/* rental price */
+.rental .rental_right .rental_filter .filter_type:nth-child(1){
+    height: 95px;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart{
+    height: 65%;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control{
+    position: relative;
+    width: 100%;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control .circle{
+    width: 10px;
+    height: 10px;
+    border: 3px solid #00A99D;
+    border-radius: 50%;
+    bottom: -7px;
+    z-index: 10;
+    cursor: grab;
+    background-color: white;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: #00A99D;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control .circle.left{
+    position: absolute;
+    left: 0px;
+    
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control .circle.right{
+    position: absolute;
+    right: 0px;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control .bottom_line{
+    height: 3px;
+    width: 100%;
+    background-color: #DEE2E3;
+    position: absolute;
+    bottom: 0;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail.price_chart .control .range_line{
+    height: 3px;
+    width: 100%;
+    background-color: #00A99D;
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+}
+
+.rental .rental_right .rental_filter .filter_type .filter_detail > p:hover{
+   background-color: #60C9C2; 
+}
+
+/* room amount */
+.rental .rental_right .rental_filter .filter_type .filter_detail .room_amount{
+    border: solid 1px #00A99D;
+    width: 24%;
+    margin: 8px;
+    text-align: center;
+    padding: 2px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* room kind */
+.rental .rental_right .rental_filter .filter_type .filter_detail .room_kind{
+    border: solid 1px #00A99D;
+    width: 32%;
+    margin: 8px;
+    text-align: center;
+    padding: 2px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* result title css */
+.rental .rental_right .result_title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* result house card css */
+.rental .rental_right .result_house{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rental .rental_right .result_house .house_card{
+    border: 1px solid black;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+    height: 350px;
+}
+
+.rental .rental_right .result_house .house_card .house_img{
+    width: 100%;
+    padding-bottom: 50%;
+    background-image: url("../images/001.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+.rental .rental_right .result_house .house_card .house_detail{
+    position: relative;
+    bottom: 60px;
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons{
+    
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons .price{
+    font-size: 2.3em;
+    margin: 8px;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+    letter-spacing: 1px;
+}
+
+.rental .rental_right .result_house .house_detail > p{
+    margin: 12px 8px;
+}
+
+@media(max-width: 991px){
+    .rental .rental_left{
+        width: calc(100% - 400px);
+    }
+    
+    .rental .rental_right{
+        width: 400px;
+    }
+}

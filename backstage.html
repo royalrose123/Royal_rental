@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>刊登後台</title>
+    
+    
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/backstage.css">
+</head>
+<body>
+    <header>
+        <nav id="nav" class="nav">
+        </nav>
+    </header>
+    <div id="backstagePoster" class="backstage_poster">
+            <p>房屋刊登</p>
+        </div>
+    <section id="backstage" class="backstage">
+        
+        <div id='titleContainer' class="title_container">
+            <p>標題</p>
+            <input id="title" class="title">
+            <p>屋主</p>
+            <input id="userId" class="user_id">
+        </div>
+        <div id='regionNameContainer' class="region_name_container">
+            <p>縣市</p>
+            <input id="regionName" class="region_name" placeholder="新北市">
+            <p>行政區</p>
+            <input id="sectionName" class="section_name" placeholder="三峽區">
+            <p>街道</p>
+            <input id="streetName" class="street_name" placeholder="建安路166之2號">
+        </div>
+        <div id="priceSizeContainer" class="price_size_container">
+            <p>價錢</p>
+            <input id="price" class="price" placeholder="4000元">
+            <p>坪數</p>
+            <input id="size" class="size" placeholder="12坪">
+        </div>
+        <div id="roomContainer" class="room_container">
+            <p>房間數量</p>
+            <input id="bedroom" class="bedroom" type="number" placeholder="1">
+            <p>客廳數量</p>
+            <input id="livingroom" class="livingroom" type="number" placeholder="0">
+            <p>廁所數量</p>
+            <input id="restroom" class="restroom" type="number" placeholder="2">
+        </div>
+        <div id="kindTypeContainer" class="kind_type_container">
+            <p>類型</p>
+            <label>
+                <input id="kindTypeStudio" class="kind_type_studio" type="radio" name="kindType">
+                獨立套房
+            </label>
+            <label>
+                <input id="kindTypeRoom" class="kind_type_room" type="radio" name="kindType">
+                雅房
+            </label>
+            <label>
+                <input id="kindTypeHouse" class="kind_type_house" type="radio" name="kindType">
+                整層住家
+            </label>
+        </div>
+        <div id="deviceContainer" class="device_container">
+            <div class="device_title_container">
+                <p>設備</p>
+            </div>
+            <div id="deviceCheckContainer" class="device_check_container">
+                <label>
+                    <input id="deviceTable" class="device_table" type="checkbox">
+                    桌子
+                </label>
+                <label>
+                    <input id="deviceChair" class="device_chair" type="checkbox">
+                    椅子
+                </label>
+                <label>
+                    <input id="deviceCloset" class="device_closet" type="checkbox">
+                    衣櫃
+                </label>
+                <label>
+                    <input id="deviceBed" class="device_bed" type="checkbox">
+                    床
+                </label>
+                <label>
+                    <input id="deviceSofa" class="device_sofa" type="checkbox">
+                    沙發
+                </label>
+                <label>
+                    <input id="deviceHeater" class="device_heater" type="checkbox">
+                    熱水器
+                </label>
+                <label>
+                    <input id="deviceTv" class="device_tv" type="checkbox">
+                    電視
+                </label>
+                <label>
+                    <input id="deviceFridge" class="device_fridge" type="checkbox">
+                    冰箱
+                </label>
+                <label>
+                    <input id="deviceAc" class="device_ac" type="checkbox">
+                    冷氣
+                </label>
+                <label>
+                    <input id="deviceWashMachine" class="device_wash_machine" type="checkbox">
+                    洗衣機
+                </label>
+                <label>
+                    <input id="deviceInternet" class="device_internet" type="checkbox">
+                    網路
+                </label>
+                <label>
+                    <input id="deviceCable" class="device_cable" type="checkbox">
+                    第四台
+                </label>
+            </div>
+        </div>
+        <div id="othersContainer" class="others_container">
+            <div class="others_title_container">
+                <p>其他</p>
+            </div>
+            <div id="othersContainer" class="others_check_container">
+                <label>
+                    <input id="othersKitchen" class="others_kitchen" type="checkbox">
+                    廚房
+                </label>
+                <label>
+                    <input id="othersElevator" class="others_elevator" type="checkbox">
+                    電梯
+                </label>
+            </div>
+        </div>
+        <div id="requireContainer" class="require_container">
+            <p>押金</p>
+            <input id="requireDeposit" class="require_deposit" placeholder="一個月">
+            <p>最短租期</p>
+            <input id="requireLeastPeriod" class="require_least_period" placeholder="半年">
+            <p>開伙</p>
+            <input id="requireCook" class="require_cook" placeholder="不可以">
+            
+        </div>
+        <div id="requireContainer" class="require_container">
+            <p>養寵物</p>
+            <input id="requirePet" class="require_pet" placeholder="可以">
+            <p>身分要求</p>
+            <input id="requireIdentify" class="require_identify" placeholder="學生、上班族、都可">
+            <p>性別要求</p>
+            <input id="requireGender" class="require_gender" placeholder="限男生、限女生、都可">
+        </div>
+        <div id="houseImgRow" class="house_img_row">
+            <div id="houseImgLeft" class="house_img_left">
+                <p>照片</p>
+            </div>
+            <div id="houseImgRight" class="house_img_right">
+                <input id="uploadHouseImg" type="file" multiple accept="image/gif, image/jpeg, image/png"/>
+            </div>
+            
+        </div>
+        <div id="houseSurroundingContainer" class="house_surrounding_container">
+            <div id=houseSurroundingTitle class="house_surrounding_title">
+                <p>生活周遭</p>
+            </div>
+            <textarea id="houseSurrounding" class="house_surrounding"></textarea>
+        </div>
+        <div id="houseDetailContainer" class="house_detail_container">
+            <div id=houseDetailTitle class="house_detail_title">
+                <p>房屋說明</p>
+            </div>
+            <textarea id="houseDetail" class="house_detail" name="房屋說明" cols="30" rows="10"></textarea>
+        </div>
+        <div id="houseSubmitContainer" class="house_submit_container">
+            <p id="houseSubmit" class="house_submit">刊登</p>
+        </div>
+    </section>
+    
+</body>
+<footer>
+    <script src="js/lib.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/backstage.js"></script>
+</footer>
+</html>
