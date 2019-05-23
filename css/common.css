@@ -22,59 +22,96 @@ body{
     flex-direction: row;
     justify-content: flex-start; 
     align-items: center;
+    width: 80%;
 }
 
 .nav .nav_left .nav_logo{
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     background: url("../images/nav_house.jpg");
     background-size: cover;
-    margin: 8px;
+    background-position: center;
 }
 
 .nav .nav_left .nav_title{
     margin: 0;
-    font-size: 32px;
+    font-size: 14px;
 }
 
 .nav .nav_left .nav_search{
-    width: 240px;
-    height: 30px;
+    width: 50%;
+    height: 24px;
     margin: 8px 16px;
-    font-size: 14px;
-    padding: 4px 4px 4px 36px;
+    font-size: 10px;
+    padding: 4px 4px 4px 22px;
     background-image: url("../images/nav_search.png");
     background-repeat: no-repeat;
     background-position: 5px center;
-    background-size: 30px;
+    background-size: 16px;
     border: solid 1px #B3B6B7;
 }
 
 .nav .nav_right{
-    width: 300px;
+    width: 60px;
     height: inherit;
     display: flex;
     flex-direction: row;
     justify-content: flex-end; 
     align-items: center;
-    margin: 8px;
+    margin: 8px 8px;
+}
+
+.nav .nav_right .nav_list{
+    margin: 0px;
+    padding: 0px;
+    display: none;
+    position: fixed;
+    width: 70%;
+    height: 100% ;
+    background-color: #2d3138;
+    top: 0px;
+    right: 0px;
+    z-index: 1000 !important;
+}
+
+.nav .nav_right .nav_list .nav_close{
+    display: block;
+    color: white;
+    font-size: 24px;
+    text-align: right;
+    padding: 0 8px;
+    cursor: pointer;
 }
 
 .nav .nav_right .nav_btn{
-    margin: 8px 16px;
+    display: block;
+    color: white;
+    padding: 8px 16px;
     color: rgb(128, 128, 128);
+    cursor: pointer;
+}
+
+.nav .nav_right .nav_btn:hover{
+    background-color: aqua;
+}
+
+.nav .nav_right .nav_btn{
+    color: rgb(128, 128, 128);
+    cursor: pointer;
+}
+
+.fas.fa-bars{
+    display: block;
+    margin: 8px;
 }
 
 .nav .nav_right .nav_fav_btn{
-    margin: 0;
-    width: 104px;
+    width: 30px;
     height: 36px;
     display: flex;
     flex-direction: row;
     justify-content: center; 
     align-items: center;
-    border-radius: 4px;
-    border: 1px solid rgb(128, 128, 128)
 }
 
 .nav .nav_right .nav_fav_btn .nav_fav_img{
@@ -86,5 +123,94 @@ body{
 }
 
 .nav .nav_right .nav_fav_btn .nav_fav_title{
-    margin-left: -8px;
+    display: none;
 }
+
+@media(min-width: 768px){
+    .nav .nav_left{
+        width: 90%;
+    }
+    
+    .nav .nav_left .nav_logo{
+        width: 30px;
+        height: 30px;
+        background: url("../images/nav_house.jpg");
+        background-size: cover;
+        margin: 8px;
+    }
+
+    .nav .nav_left .nav_title{
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .nav .nav_left .nav_search{
+        width: 50%;
+        height: 30px;
+        margin: 8px 16px;
+        font-size: 14px;
+        padding: 4px 4px 4px 32px;
+        background-position: 5px center;
+        background-size: 30px;
+        border: solid 1px #B3B6B7;
+    }
+    
+    .nav .nav_right{
+        width: 400px;
+    }
+    
+    .nav .nav_right .fas.fa-bars{
+        display: none;
+    }
+
+    .nav .nav_right .nav_list{
+        display: flex !important;
+        flex-direction: row;
+        justify-content: space-around; 
+        align-items: center;
+        margin: 0px 8px;
+        position: static;
+        width: 80%;
+        background-color: transparent;
+    }
+    
+    .nav .nav_right .nav_list .nav_close{
+        display: none;
+    }
+
+    .nav .nav_right .nav_btn{
+        display: inline;
+        color: white;
+        margin: 8px;
+        padding: 0px 0px;
+        color: rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    
+    .nav .nav_right .nav_fav_btn{
+        width: 150px;
+        height: 36px;
+        border-radius: 4px;
+        border: 1px solid rgb(128, 128, 128)
+    }
+
+    .nav .nav_right .nav_fav_btn .nav_fav_img{
+        width: 40px;
+        height: 40px;
+        margin-left: -8px;
+        background: url("../images/nav_heart.png");
+        background-size: cover;
+    }
+
+    .nav .nav_right .nav_fav_btn .nav_fav_title{
+        display: inline;
+    }
+}
+
+/* footer css */
+.footer{
+    width: 100%;
+    height: 60px;
+    background-color: #ececec;
+}
+

@@ -1,3 +1,9 @@
+var getData;
+firebaseData = database.ref()
+firebaseData.on('value', function(snapshot) {
+    getData = snapshot.val();
+    houseSubmit();
+});
 
 /* select imgage */
 app.get("#uploadHouseImg").addEventListener("change", function(){
@@ -50,11 +56,92 @@ app.backstage.deleteImg = (e) => {
     }
 }
 
-app.get("#houseSubmit").addEventListener("click", function(){
-    let houseImages = [] 
-    houseImgArr.map((img) => {
-      houseImages.push(app.get("#houseImg" + img).getAttribute("src"));
+/* house submit */
+function houseSubmit(){
+    app.get("#houseSubmit").addEventListener("click", function(){
+        let houseImages = [] 
+        houseImgArr.map((img) => {
+          houseImages.push(app.get("#houseImg" + img).getAttribute("src"));
+        })
+        if(houseImages.length === 0){
+//            alert("請選擇照片")
+//            return
+        }
+//        if(!getData[0]["houseImg"]){
+//            getData[0]["houseImg"] = []
+//        }
+        
+        let kindTypeName;
+        let kindType = document.getElementsByName("kindType")
+        for(let i = 0; i < kindType.length; i++){
+            if(kindType[i].checked){
+                 kindTypeName = kindType[i].value
+            }
+        }
+        
+        let deviceObj = {}
+        let device = document.getElementsByName("deviceCheck")
+        for(i = 0; i < device.length; i++){
+            deviceObj[device[i].value] =  device[i].checked
+        }
+        
+        let othersObj = {}
+        let others = document.getElementsByName("othersCheck")
+        for(i = 0; i < others.length; i++){
+            othersObj[others[i].value] =  others[i].checked
+        }
+        
+        let requireObj = {}
+        let require = document.getElementsByClassName("require")
+        for(i = 0; i < require.length; i++){
+            if(!require[i].value){
+//                alert("請輸入" + require[i].name )
+//                return
+            }
+            requireObj[require[i].name] = require[i].value
+        }
+        
+        var dateObject = new Date();
+        
+        let prevPostId;
+        let thisPostId;
+        if(!getData){
+            thisPostId = 0;
+        }else{
+            prevPostId = getData[getData.length - 1]["postId"]
+            thisPostId = Number(prevPostId) + 1;
+        }
+        console.log(prevPostId)
+        
+        
+        database.ref(thisPostId).update({
+            title: title.value,
+            userId: userId.value,
+            postId: thisPostId,
+            regionName: regionName.value,
+            sectionName: sectionName.value,
+            streetName: streetName.value,
+            price: price.value,
+            size: size.value,
+            bedroom: bedroom.value,
+            restroom: restroom.value,
+            livingroom: livingroom.value,
+            houseFloor: houseFloor.value,
+            totalFloor: houseFloor.value,
+            kindType: kindTypeName,
+            device: deviceObj,
+            others: othersObj,
+            require: requireObj,
+            houseImg: houseImages,
+            houseSurrounding: houseSurrounding.value,
+            houseDetail: houseDetail.value,
+            userId: userId.value,
+            userName: userId.value,
+            address: regionName.value + sectionName.value + streetName.value,
+            createTime: dateObject.getTime(),
+            lastUpdateTime: dateObject.getTime(),
+            houseQuestion: []
+        })
+        
     })
-    console.log("houseImages")
-    console.log(houseImages)
-})
+}

@@ -6,11 +6,22 @@ function createNav(){
     app.createElement("input", "navSearch", "nav_search", "navLeft", "", "");
     app.get("#navSearch").setAttribute("placeholder","請問想住哪呢?")
     app.createElement("div", "navRight", "nav_right", "nav", "", "");
-    app.createElement("ul", "navList", "nav_list", "nav", "", "");
-    app.createElement("li", "rentalBtn", "nav_item", "navList", "找房", "");
-    app.createElement("li", "memberBtn", "nav_item", "navList", "會員", "");
-    app.createElement("li", "loginBtn", "nav_item", "navList", "登入", "");
+    app.createElement("ul", "navList", "nav_list", "navRight", "", "");
+    app.createElement("li", "navClose", "nav_close", "navList", "x", "");
+    app.createElement("li", "rentalBtn", "nav_btn", "navList", "找房", "");
+    app.createElement("li", "memberBtn", "nav_btn", "navList", "會員", "");
+    app.createElement("li", "loginBtn", "nav_btn", "navList", "登入", "");
     app.createElement("div", "navFavBtn", "nav_fav_btn", "navRight", "", "");
     app.createElement("div", "navFavImg", "nav_fav_img", "navFavBtn", "", "");
     app.createElement("p", "favBtnTitle", "nav_fav_title", "navFavBtn", "我的最愛", "");
+    app.createElement("i", "navBtn", "fas fa-bars", "navRight", "", "");
+    
+    app.get("#navBtn").addEventListener("click",function(){
+        app.get("#navList").style.display = "inline-block"
+    })
+    
+    app.get("#navClose").addEventListener("click",function(){
+        app.get("#navList").style.display = "none"
+    })
 }
+

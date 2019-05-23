@@ -186,22 +186,28 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .rental .rental_right .result_house .house_card{
-    border: 1px solid black;
+    border: 1px solid #B3B6B7;
     width: 100%;
     margin-top: 20px;
     position: relative;
     height: 350px;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .rental .rental_right .result_house .house_card .house_img{
     width: 100%;
     padding-bottom: 50%;
-    background-image: url("../images/001.jpeg");
+/*    background-image: url("../images/001.jpeg");*/
+/*
     background-size: cover;
     background-position: center;
+*/
+    
 }
 
 .rental .rental_right .result_house .house_card .house_detail{
@@ -227,10 +233,24 @@
 
 @media(max-width: 991px){
     .rental .rental_left{
-        width: calc(100% - 400px);
+/*        width: calc(100% - 400px);*/
+        display: none;
     }
     
     .rental .rental_right{
-        width: 400px;
+        width: 100%;
+        padding: 0;
     }
+    
+    .rental .rental_right .result_house .house_card{
+        height: 200px;
+        border-radius: 0px;
+        margin: 0;
+    }
+    
+    .rental .rental_right .result_house .house_card .house_img{
+/*        padding-bottom: 0;*/
+        width: 300px;
+    }
+    
 }

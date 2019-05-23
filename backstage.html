@@ -9,6 +9,13 @@
     
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/backstage.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+
+    <script src="./js/firebase.js"></script>
 </head>
 <body>
     <header>
@@ -22,44 +29,50 @@
         
         <div id='titleContainer' class="title_container">
             <p>標題</p>
-            <input id="title" class="title">
+            <input id="title" class="title" value="高級套房">
             <p>屋主</p>
             <input id="userId" class="user_id">
         </div>
         <div id='regionNameContainer' class="region_name_container">
             <p>縣市</p>
-            <input id="regionName" class="region_name" placeholder="新北市">
+            <input id="regionName" class="region_name" placeholder="台北市" value="台北市">
             <p>行政區</p>
-            <input id="sectionName" class="section_name" placeholder="三峽區">
+            <input id="sectionName" class="section_name" placeholder="大安區" value="大安區">
             <p>街道</p>
-            <input id="streetName" class="street_name" placeholder="建安路166之2號">
+            <input id="streetName" class="street_name" placeholder="和平東路56號" value="和平東路56號">
         </div>
         <div id="priceSizeContainer" class="price_size_container">
             <p>價錢</p>
-            <input id="price" class="price" placeholder="4000元">
+            <input id="price" class="price" placeholder="4000" value="16800">
             <p>坪數</p>
-            <input id="size" class="size" placeholder="12坪">
+            <input id="size" class="size" placeholder="12坪" value="12">
         </div>
         <div id="roomContainer" class="room_container">
             <p>房間數量</p>
-            <input id="bedroom" class="bedroom" type="number" placeholder="1">
+            <input id="bedroom" class="bedroom" type="number" placeholder="0">
             <p>客廳數量</p>
             <input id="livingroom" class="livingroom" type="number" placeholder="0">
             <p>廁所數量</p>
-            <input id="restroom" class="restroom" type="number" placeholder="2">
+            <input id="restroom" class="restroom" type="number" placeholder="0">
+        </div>
+        <div id="floorContainer" class="floor_container">
+            <p>樓層</p>
+            <input id="houseFloor" class="house_floor" type="number" placeholder="0">
+            <p>總樓層</p>
+            <input id="totalFloor" class="total_floor" type="number" placeholder="0">
         </div>
         <div id="kindTypeContainer" class="kind_type_container">
             <p>類型</p>
             <label>
-                <input id="kindTypeStudio" class="kind_type_studio" type="radio" name="kindType">
+                <input id="kindTypeStudio" class="kind_type_studio" type="radio" name="kindType" value="獨立套房">
                 獨立套房
             </label>
             <label>
-                <input id="kindTypeRoom" class="kind_type_room" type="radio" name="kindType">
+                <input id="kindTypeRoom" class="kind_type_room" type="radio" name="kindType" value="雅房">
                 雅房
             </label>
             <label>
-                <input id="kindTypeHouse" class="kind_type_house" type="radio" name="kindType">
+                <input id="kindTypeHouse" class="kind_type_house" type="radio" name="kindType" value="整層住家">
                 整層住家
             </label>
         </div>
@@ -69,51 +82,51 @@
             </div>
             <div id="deviceCheckContainer" class="device_check_container">
                 <label>
-                    <input id="deviceTable" class="device_table" type="checkbox">
+                    <input id="deviceTable" class="device_table" type="checkbox" name="deviceCheck" value="table">
                     桌子
                 </label>
                 <label>
-                    <input id="deviceChair" class="device_chair" type="checkbox">
+                    <input id="deviceChair" class="device_chair" type="checkbox" name="deviceCheck" value="chair">
                     椅子
                 </label>
                 <label>
-                    <input id="deviceCloset" class="device_closet" type="checkbox">
+                    <input id="deviceCloset" class="device_closet" type="checkbox" name="deviceCheck" value="closet">
                     衣櫃
                 </label>
                 <label>
-                    <input id="deviceBed" class="device_bed" type="checkbox">
+                    <input id="deviceBed" class="device_bed" type="checkbox" name="deviceCheck" value="bed">
                     床
                 </label>
                 <label>
-                    <input id="deviceSofa" class="device_sofa" type="checkbox">
+                    <input id="deviceSofa" class="device_sofa" type="checkbox" name="deviceCheck" value="sofa">
                     沙發
                 </label>
                 <label>
-                    <input id="deviceHeater" class="device_heater" type="checkbox">
+                    <input id="deviceHeater" class="device_heater" type="checkbox" name="deviceCheck" value="heater">
                     熱水器
                 </label>
                 <label>
-                    <input id="deviceTv" class="device_tv" type="checkbox">
+                    <input id="deviceTv" class="device_tv" type="checkbox" name="deviceCheck" value="TV">
                     電視
                 </label>
                 <label>
-                    <input id="deviceFridge" class="device_fridge" type="checkbox">
+                    <input id="deviceFridge" class="device_fridge" type="checkbox" name="deviceCheck" value="fridge">
                     冰箱
                 </label>
                 <label>
-                    <input id="deviceAc" class="device_ac" type="checkbox">
+                    <input id="deviceAc" class="device_ac" type="checkbox" name="deviceCheck" value="AC">
                     冷氣
                 </label>
                 <label>
-                    <input id="deviceWashMachine" class="device_wash_machine" type="checkbox">
+                    <input id="deviceWashMachine" class="device_wash_machine" type="checkbox" name="deviceCheck" value="wash-machine">
                     洗衣機
                 </label>
                 <label>
-                    <input id="deviceInternet" class="device_internet" type="checkbox">
+                    <input id="deviceInternet" class="device_internet" type="checkbox" name="deviceCheck" value="internet">
                     網路
                 </label>
                 <label>
-                    <input id="deviceCable" class="device_cable" type="checkbox">
+                    <input id="deviceCable" class="device_cable" type="checkbox" name="deviceCheck" value="cable">
                     第四台
                 </label>
             </div>
@@ -124,31 +137,31 @@
             </div>
             <div id="othersContainer" class="others_check_container">
                 <label>
-                    <input id="othersKitchen" class="others_kitchen" type="checkbox">
+                    <input id="othersKitchen" class="others_kitchen" type="checkbox" name="othersCheck" value="kitchen">
                     廚房
                 </label>
                 <label>
-                    <input id="othersElevator" class="others_elevator" type="checkbox">
+                    <input id="othersElevator" class="others_elevator" type="checkbox" name="othersCheck" value="elevator">
                     電梯
                 </label>
             </div>
         </div>
         <div id="requireContainer" class="require_container">
             <p>押金</p>
-            <input id="requireDeposit" class="require_deposit" placeholder="一個月">
+            <input id="requireDeposit" class="require" placeholder="一個月"  name="deposit" value="一個月">
             <p>最短租期</p>
-            <input id="requireLeastPeriod" class="require_least_period" placeholder="半年">
+            <input id="requireLeastPeriod" class="require" placeholder="半年"  name="leastPeriod" value="一年">
             <p>開伙</p>
-            <input id="requireCook" class="require_cook" placeholder="不可以">
+            <input id="requireCook" class="require" placeholder="不可以"  name="cook" value="可以">
             
         </div>
         <div id="requireContainer" class="require_container">
             <p>養寵物</p>
-            <input id="requirePet" class="require_pet" placeholder="可以">
+            <input id="requirePet" class="require" placeholder="可以"  name="pet" value="不可以">
             <p>身分要求</p>
-            <input id="requireIdentify" class="require_identify" placeholder="學生、上班族、都可">
+            <input id="requireIdentify" class="require" placeholder="學生、上班族、都可"  name="identity" value="都可">
             <p>性別要求</p>
-            <input id="requireGender" class="require_gender" placeholder="限男生、限女生、都可">
+            <input id="requireGender" class="require" placeholder="限男生、限女生、都可"  name="gender" value="限女性">
         </div>
         <div id="houseImgRow" class="house_img_row">
             <div id="houseImgLeft" class="house_img_left">
@@ -177,9 +190,10 @@
     </section>
     
 </body>
-<footer>
+<footer id="footer">
+    
+</footer>
     <script src="js/lib.js"></script>
     <script src="js/common.js"></script>
     <script src="js/backstage.js"></script>
-</footer>
 </html>

@@ -7,49 +7,34 @@ function initMap() {
     });
 }
 
-// getRentalFilter()
-// function getRentalFilter(){
+
+/* firebase house data */
+var getData;
+
+var firebaseData = database.ref()
+firebaseData.on("value", function(snapshot){
+    getData = snapshot.val();
+    console.log(getData);
+    getInitData();
     
-//     app.get("#bottomLine").style.width = "100%";
-//     let bottomWidth = app.get("#bottomLine").offsetWidth
-//     let rangeWidth = app.get("#rangeLine").offsetWidth
-//     let rightCircle = rangeWidth / bottomWidth * 100000
-//     // maxMoney = 
-//     console.log("bottomLine = " + bottomWidth );
-//     console.log("rangeLine = " + rangeWidth );
+})
 
-//     let circleLeft = app.get("#circleLeft")
-//     circleLeft.addEventListener("mousedown",focus)
-//     circleLeft.addEventListener("mousemove",drag)
-//     circleLeft.addEventListener("mouseup",unfocus)
-//     circleLeft.addEventListener("mouseleave",unfocus)
+function getInitData(){
+    
+    app.createElement("div", "resultHouse", "result_house", "rentalRight", "", "")
+    for(let i = 0; i < getData.length; i++){
+        app.createElement("div", "houseCard" + i, "house_card", "resultHouse", "", "")  
+        app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "")
+        app.get("#houseImg" + i).style.background = "url('" + getData[i]["houseImg"][0] + "')50% / cover no-repeat"
+        app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "")  
+        app.createElement("div", "priceIcons" + i, "price_icons", "houseDetail" + i, "", "")
+        app.createElement("p", "price" + i, "price", "priceIcons" + i, getData[i]["price"], "")
+        app.createElement("p", "", "", "houseDetail" + i, getData[i]["bedroom"] + "間房間, " + getData[i]["restroom"] + "間廁所, " + getData[i]["kindType"], "")
+        app.createElement("p", "", "", "houseDetail" + i, getData[i]["section_name"], "")
+    }
+}
 
-//     let leftMoney = app.get("#moneyLeft");
-//     leftMoney.textContent = 0;
-//     let RightMoney = app.get("#moneyRight");
-//     RightMoney.textContent = rightCircle;
-
-
-//     let isDown = false;
-//     function focus(e){
-//         isDown = true;
-//         console.log("down")
-//         console.log(e.offsetX)
-//         console.log(e.screenX)
-//     }
-
-//     function unfocus(){
-//         isDown = false;
-//         console.log("up")
-//     }
-
-//     function drag(e){
-//         if(!isDown) return;
-//         e.offsetX += e.movementX;
-        
-//     }
-// }
-
+/* price filter */
 let leftMoney = app.get("#moneyLeft");
 leftMoney.textContent = 0;
 let RightMoney = app.get("#moneyRight");
@@ -138,7 +123,7 @@ function drag(e) {
     // console.log(rangeWidth)
     app.get("#rangeLine").style.width = rangeWidth + "px";
     app.get("#rangeLine").style.left = leftCirle.getBoundingClientRect().x - 963 + "px";
-    console.log(app.get("#circleLeft").getBoundingClientRect())
+//    console.log(app.get("#circleLeft").getBoundingClientRect())
     // console.log()
 }
 

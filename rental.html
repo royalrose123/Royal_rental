@@ -6,8 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Royal Rental</title>
 
+    
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/rental.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+
+    <script src="./js/firebase.js"></script>
 </head>
 <body>
     <header>
@@ -64,6 +72,7 @@
             <div id="resultTitle" class="result_title">
                 <p>335筆結果</p>
             </div>
+<!--
             <div id="resultHouse" class="result_house">
                 <div id="houseCard" class="house_card">
                     <div id="houseImg" class="house_img"></div>
@@ -75,26 +84,18 @@
                         <p>大同區</p>
                     </div>
                 </div>
-                <div id="houseCard" class="house_card">
-                    <div id="houseImg" class="house_img"></div>
-                    <div id="houseDetail" class="house_detail">
-                        <div id="priceIcons" class="price_icons">
-                            <p id="price" class="price">10,100</p>
-                        </div>
-                        <p>1間房間、1間廁所、獨立套房</p>
-                        <p>文山區</p>
-                    </div>
-                </div>
             </div>
+-->
         </div>
     </section>
 </body>
-<footer>
+<footer id="footer" class="footer">
+    
+</footer>
     <script src="./js/lib.js"></script>
     <script src="./js/common.js"></script>
     <script src="./js/rental.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO1V4ilzKx8wxo6fJ0QgIskky6lcUUhSc&callback=initMap"
     async defer></script>
-</footer>
 </html>
     
