@@ -1,5 +1,6 @@
 let app = {
     backstage: {},
+    log: {},
 }
 
 app.get = function( selector ){

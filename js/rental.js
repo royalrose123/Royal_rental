@@ -11,12 +11,10 @@ function initMap() {
 /* firebase house data */
 var getData;
 
-var firebaseData = database.ref()
+var firebaseData = database.ref("house")
 firebaseData.on("value", function(snapshot){
     getData = snapshot.val();
-    console.log(getData);
     getInitData();
-    
 })
 
 function getInitData(){

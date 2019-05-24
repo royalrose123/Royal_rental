@@ -1,14 +1,14 @@
 var getData;
-firebaseData = database.ref()
+firebaseData = database.ref("house")
 firebaseData.on('value', function(snapshot) {
     getData = snapshot.val();
     houseSubmit();
+    console.log(getData)
 });
 
 /* select imgage */
 app.get("#uploadHouseImg").addEventListener("change", function(){
     readURL(this);
-    
 })
 
 /* support ID 10, Chrome 7 */
@@ -49,7 +49,7 @@ app.backstage.deleteImg = (e) => {
     let thisImgNo = e.target.getAttribute("data-delete")
     let thisImg = app.get("#houseImgContainer" + thisImgNo)
     thisImg.remove()
-    for(i = 0; i < houseImgArr.length; i++){
+    for(let i = 0; i < houseImgArr.length; i++){
         if(houseImgArr[i] == thisImgNo){
           houseImgArr.splice(i, 1)
         }
@@ -81,19 +81,19 @@ function houseSubmit(){
         
         let deviceObj = {}
         let device = document.getElementsByName("deviceCheck")
-        for(i = 0; i < device.length; i++){
+        for(let i = 0; i < device.length; i++){
             deviceObj[device[i].value] =  device[i].checked
         }
         
         let othersObj = {}
         let others = document.getElementsByName("othersCheck")
-        for(i = 0; i < others.length; i++){
+        for(let i = 0; i < others.length; i++){
             othersObj[others[i].value] =  others[i].checked
         }
         
         let requireObj = {}
         let require = document.getElementsByClassName("require")
-        for(i = 0; i < require.length; i++){
+        for(let i = 0; i < require.length; i++){
             if(!require[i].value){
 //                alert("請輸入" + require[i].name )
 //                return
@@ -110,11 +110,10 @@ function houseSubmit(){
         }else{
             prevPostId = getData[getData.length - 1]["postId"]
             thisPostId = Number(prevPostId) + 1;
+            console.log(thisPostId)
         }
-        console.log(prevPostId)
         
-        
-        database.ref(thisPostId).update({
+        database.ref("house/" + thisPostId).update({
             title: title.value,
             userId: userId.value,
             postId: thisPostId,
@@ -143,5 +142,12 @@ function houseSubmit(){
             houseQuestion: []
         })
         
+        app.get("#alertBoxLayout").style.display = "flex";
+        app.get("#alertIndex").innerHTML = "刊登成功";
+        app.get("#alertBtn").onclick = function(){
+            window.location = "member.html";
+        }
     })
+    
+    
 }

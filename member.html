@@ -9,8 +9,11 @@
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/member.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="./js/firebase.js"></script>
 </head>
-<body>
+<body id="body">
     <header>
         <nav id="nav" class="nav">
         </nav>
@@ -26,13 +29,12 @@
             <p id="logOut" class="member_bar_btn">登出</p>
         </div>
         <div id="memberDisplay" class="member_display">
-<!--
             <div id="memberData" class="member_data">
                 <div id="memberPhoto" class="member_photo">
                 </div>
                 <div id="memberDataRow" class="member_data_row">
                     <p class="member_data_title">ID</p>
-                    <input id="memberId" class="member_input">
+                    <input id="memberId" class="member_input" disabled>
                 </div>
                 <div id="memberDataRow" class="member_data_row">
                     <p class="member_data_title">姓名</p>
@@ -48,7 +50,6 @@
                 </div>
                 <p id="memberModifyBtn" class="member_modify_btn">修改資料</p>
             </div>
--->
             <div id="memberFavHouse" class="member_fav_house">
                 <div id="favHouse" class="fav_house">
                     <div id="houseImg" class="house_img"></div>
@@ -91,4 +92,5 @@
 </footer>
     <script src="js/lib.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/member.js"></script>
 </html>
