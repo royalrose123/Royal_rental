@@ -1,3 +1,15 @@
+let checkUser;
+firebase.auth().onAuthStateChanged(function(user){ 
+    checkUser = user;
+    if(user){
+        app.get("#loginBtn").style.display = "none";
+        app.get("#memberBtn").style.display = "block";
+    }else{
+        app.get("#loginBtn").style.display = "block";
+        app.get("#memberBtn").style.display = "none";
+    }
+})
+
 /* create nav */
 createNav()
 function createNav(){
@@ -18,12 +30,23 @@ function createNav(){
     app.createElement("p", "favBtnTitle", "nav_fav_title", "navFavBtn", "我的最愛", "");
     app.createElement("i", "navBtn", "fas fa-bars", "navRight", "", "");
     
+    app.get("#rentalBtn").onclick = function(){
+        location.href= './rental.html'
+    }
+    
     app.get("#memberBtn").onclick = function(){
         location.href= './member.html'
     }
     
     app.get("#postBtn").onclick = function(){
-        location.href= './backstage.html'
+        console.log(checkUser)
+            if(!checkUser){
+                app.get("#alertBoxLayout").style.display = "flex";
+                app.get("#alertIndex").innerHTML = "請先登入或註冊會員";
+                return
+            }else{
+                location.href= './backstage.html'
+            }
     }
     
     app.get("#navBtn").addEventListener("click",function(){

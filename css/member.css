@@ -85,20 +85,63 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+/*    width: 80%;*/
 }
 
 .member .member_display .member_data .member_data_row .member_data_title{
     width: 90px;
 }
 
-.member .member_display .member_data .member_data_row .member_input{
+.member .member_display .member_data .member_data_row .input_disbled{
     width: 300px;
     height: 30px;
     font-size: 16px;
     padding: 0 8px;
     letter-spacing: 1px;
+    
+    border: none;
+    background-color: transparent;
 }
 
+.member .member_display .member_data .member_data_row > input{
+    width: 300px;
+    height: 30px;
+    font-size: 16px;
+    padding: 0 8px;
+    letter-spacing: 1px;
+    
+    border: solid 0.5px rgba(0, 0, 0, 0.3);
+/*    background-color: aqua;*/
+}
+
+/*
+.member .member_display .member_data .member_data_row .member_input.isModify{
+    
+}
+*/
+
+.member .member_display .member_data .member_data_row .member_label_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 320px;
+}
+
+
+.member .member_display .member_data .member_data_row .member_label_container .member_gender_label{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.member .member_display .member_data .member_data_row .member_label_container .member_gender_label > p{
+    margin-right: 8px;
+}
+    
+
+/*
 .member_input_id{
     background-color: rgba(230, 230, 230, 0);
     color: rgb(128, 128, 128);
@@ -110,15 +153,16 @@
     height: 30px;
     padding-left: 5px;
 }
+*/
 
-.member .member_display .member_data .member_modify_btn{
+.member .member_display .member_data .member_data_row .member_data_btn{
     font-size: 16px;
     color: white;
     background-color: rgb(26, 216, 211);
     width: 80px;
     height: 16px;
     line-height: 16px;
-    margin: 16px 0;
+    margin: 16px 8px;
     padding: 10px;
     border-radius: 6px;
     text-align: center;

@@ -12,7 +12,7 @@ function createLogLayout(){
     app.createElement("div","loninBtnContainer","login_btn_container","logLayout","","");
     app.createElement("p","signup","login_btn","loninBtnContainer","註冊",app.log.createAccount);
     app.createElement("p","login","login_btn","loninBtnContainer","登入",app.log.logInClick);
-    app.createElement("p","gmailLogin","gmail_login","logLayout","Log In With Gmail","");
+    app.createElement("p","gmailLogin","gmail_login","logLayout","Log In With Gmail",app.log.gmailLogin);
     
     app.get("#logLayoutContainer").addEventListener("click",(e)=>{
         if(e.eventPhase == 2){
@@ -86,13 +86,43 @@ app.log.logInClick = function(){
                 app.get("#alertBoxLayout").style.display = "flex";
                 app.get("#alertIndex").innerHTML = "登入中";
                 setUserOnFirebase();
-//                setTimeout(windowReload,3000);
+                setTimeout(windowReload,3000);
             }else {
                 app.get("#alertBoxLayout").style.display = "flex";
                 app.get("#alertIndex").innerHTML = "信箱密碼有誤，或尚未驗證2。";
             } 
         }
     })
+}
+
+app.log.gmailLogin = function(){
+    var provider = new firebase.auth.GoogleAuthProvider();
+    
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+        console.log(result)
+      var user = result.user;
+      // ...
+        if(user){
+            windowReload()
+        }
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+        console.log(error)
+      // ...
+    });
+}
+
+function windowReload(){
+    window.location.reload();
 }
 
 function setUserOnFirebase(){
