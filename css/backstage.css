@@ -56,6 +56,13 @@
     font-size: 16px;
 }
 
+.backstage > .title_container > .user_name.disabled{
+    background-color: white;
+    border: none;
+    color: black;
+    font-weight: 200;
+}
+
 /* kind type css*/
 .backstage .kind_type_container > label{
     font-size: 16px;
@@ -103,11 +110,36 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    width: 800px;
+/*    width: 800px;*/
     margin: 8px;
 }
 
 .backstage .others_container .others_check_container > label{
+    width: 132px;
+    margin: 8px 0px;
+}
+
+/* price include css */
+.backstage .price_include_container .price_include_title_container{
+    margin: 8px;
+    width: 48px;
+}
+
+.backstage .price_include_container .price_include_title_container > p{
+    width: 56px;
+}
+
+.backstage .price_include_container .price_include_check_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+/*    width: 800px;*/
+    margin: 8px;
+}
+
+.backstage .price_include_container .price_include_check_container > label{
     width: 132px;
     margin: 8px 0px;
 }
@@ -258,4 +290,70 @@
         padding: 8px 12px;
         margin-right: 16%;
     }
+}
+
+@media(max-width: 767px){
+    .backstage{
+/*        margin: 0;*/
+    }
+    
+    .backstage > div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 16px 0px;
+    }
+    
+    .backstage > div > p{
+        margin: 12px 0;
+        width: 72px;
+        font-size: 18px;
+    }
+
+    .backstage > div > input{
+        width: 200px;
+        height: 28px;
+        padding: 4px;
+        font-size: 16px;
+    }
+    
+    .backstage .device_container .device_check_container > label{
+        width: 50%;
+    }
+    
+    /* house surrouding < 768px */
+    .backstage .house_surrounding_container .house_surrounding_title > p{
+        width: 72px;
+        margin: 0 8px;
+    }
+    
+    .backstage .house_surrounding_container .house_surrounding{
+        font-size: 12px;
+        line-height: 18px;
+        height: 200px;
+    }
+
+    /* house detail css */
+    .backstage .house_detail_container .house_detail_title > p{
+        width: 72px;
+        margin: 0 8px;
+    }
+
+    .backstage .house_detail_container .house_detail{
+        font-size: 12px;
+        line-height: 18px;
+        height: 200px;
+    }
+
+    /* sumbit css */
+    .backstage .house_submit_container{
+        justify-content: center;
+    }
+
+    .backstage .house_submit_container .house_submit{
+        margin: 0;
+    }
+
 }

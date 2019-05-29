@@ -197,6 +197,7 @@
     height: 350px;
     border-radius: 6px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .rental .rental_right .result_house .house_card .house_img{

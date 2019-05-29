@@ -162,6 +162,8 @@ function checkLogIn(){
         }
     },function(error){});
 }
+
+
 /* log alert box */
 app.log.closeAlertBox = function(){
     app.get("#alertBoxLayout").style.display = "none";

@@ -15,13 +15,18 @@ var firebaseData = database.ref("house")
 firebaseData.on("value", function(snapshot){
     getData = snapshot.val();
     getInitData();
+    console.log(getData)
 })
 
 function getInitData(){
     
     app.createElement("div", "resultHouse", "result_house", "rentalRight", "", "")
     for(let i = 0; i < getData.length; i++){
-        app.createElement("div", "houseCard" + i, "house_card", "resultHouse", "", "")  
+        app.createElement("div", "houseCard" + i, "house_card", "resultHouse", "", "")
+        app.get("#houseCard" + i).onclick = function(){
+                location.href= "house.html?id=" + getData[i]["postId"]
+        }
+//        app.get("#articleContent"+i).setAttribute("href","house.html?id=" + getData[i]["postId"]);
         app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "")
         app.get("#houseImg" + i).style.background = "url('" + getData[i]["houseImg"][0] + "')50% / cover no-repeat"
         app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "")  

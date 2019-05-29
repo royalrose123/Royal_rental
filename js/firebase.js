@@ -21,3 +21,4 @@
 
 let database = firebase.database();
 let storage = firebase.storage();
+var storageRef = firebase.storage().ref();

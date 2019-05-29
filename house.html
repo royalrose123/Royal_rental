@@ -7,8 +7,12 @@
     <title>房屋資訊</title>
 
     <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/house.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="./js/firebase.js"></script>
 </head>
 <body id="body">
     <header>
@@ -20,6 +24,7 @@
             <div id="houseImgContainer" class="house_img_container">
             </div>
             <div id="houseRequireContainer" class="house_require_container">
+<!--
                 <div id="houseRequireRow0" class="house_require_row">
                     <p id="houseRequireTitle" class="house_require_title">押金</p><b>：</b>
                     <p id="houseRequireDeposit" class="house_require_detail">二個月</p>
@@ -44,8 +49,10 @@
                     <p id="houseRequireTitle" class="house_require_title">性別要求</p><b>：</b>
                     <p id="houseRequireDeposit" class="house_require_detail">限女性</p>
                 </div>
+-->
             </div>
             <div id="houseDeviceContainer" class="house_device_container">
+<!--
                 <p class="house_device_title">房東提供</p>
                 <div id="houseDeviceRow0" class="house_device_row">
                     <div id="houseDeviceImg" class="house_device_img"></div>
@@ -95,32 +102,32 @@
                     <div id="houseDeviceImg" class="house_device_img"></div>
                     <p id="housedeviceCable" class="house_device">第四台</p>
                 </div>
+-->
             </div>
             <div id="houseSurroundingContainer" class="house_surrounding_container">
-                <p id="houseSurroundingTitle" class="house_surrounding_title">生活交通</p>
-                <p>生活機能：近便利商店；傳統市場；公園綠地；學校；醫療</p>
-                <p>附近交通：近公館公車站； 公館捷運站</p>
             </div>
             <div id="houseDetailContainer" class="house_detail_container">
-                <p id="houseDetailTitle" class="house_detail_title">屋況說明</p>
-                <p>生活機能：近便利商店；傳統市場；公園綠地；學校；醫療</p>
-                <p>附近交通：近公館公車站； 公館捷運站</p>
             </div>
             <div id="houseQuestionContainer" class="house_question_container">
+<!--
                 <p id="houseQuestionTitle" class="house_question_title">房屋問答</p>
                 <div id="houseQuestionRow" class="house_question_row">
                     <p id="houseQuestion" class="house_question">請問...</p>
                     <p id="houseAnswer" class="house_answer">因為...</p>
                 </div>
+-->
             </div>
             <div id="houseAskContainer" class="house_ask_container">
+<!--
                 <p id="houseAskTitle" class="house_ask_title">我要提問</p>
                 <textarea id="houseAsk" class="house_ask"></textarea>
                 <p id="houseAskBtn" class="house_ask_btn">確認送出</p>
+-->
             </div>
         </div>
         <div id="houseRight" class="house_right">
             <div id="houseInfoContainer" class="house_info_container">
+<!--
                 <div id="housePriceContainer" class="house_price_container">
                     <span id="housePrice" class="house_price">10,200</span>
                     <b>元/月</b>
@@ -133,8 +140,10 @@
                     <li id="houseInfo3" class="house_info">廁所：2間</li>
                     <li id="houseInfo4" class="house_info">類型：獨立套房</li>
                 </ul>
+-->
             </div>
             <div id="ownerContainer" class="owner_info_container">
+<!--
                 <div id="owner" class="owner">
                     <div id="ownerPhoto" class="owner_photo"></div>
                     <p id="ownerName" class="owner_name">陳先生</p>
@@ -143,6 +152,7 @@
                     <div id="ownerPhoneImg" class="owner_phone_img"></div>
                     <p id="ownerPhone" class="owner_phone">0919-957-281</p>
                 </div>
+-->
             </div>
         </div>
     </div>
@@ -153,5 +163,6 @@
 </footer>
     <script src="./js/lib.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/login.js"></script>
     <script src="./js/house.js"></script>
 </html>

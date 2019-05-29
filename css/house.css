@@ -15,12 +15,88 @@
 /* house left css */
 .house .house_left{
     width: 600px;
-/*    height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
 }
 
 /* house img & selector css */
 .house .house_left .house_img_container{
     width: inherit;
+    margin: 8px;
+    position: relative;
+}
+
+.house .house_left .house_img_container .slide_left_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    width: 50px;
+    height: inherit;
+    background-color: transparent;
+    position: absolute;
+    left: 8px;
+    cursor: pointer;
+}
+
+.house .house_left .house_img_container .slide_left_container:hover{
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.house .house_left .house_img_container .slide_left_container .slide_left{
+    background: url("../images/left-arrow.png");
+    background-size: cover;
+    background-position: center;
+    
+    width: 50px;
+    height: 50px;
+    display: none;
+}
+
+.house .house_left .house_img_container .slide_left_container:hover .slide_left{
+    display: block;
+}
+
+.house .house_left .house_img_container .slide_right_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    width: 50px;
+    height: inherit;
+    background-color: transparent;
+    position: absolute;
+    right: -8px;
+    cursor: pointer;
+}
+
+.house .house_left .house_img_container .slide_right_container:hover{
+    background-color: rgba(0, 0, 0, 0.1)
+}
+
+.house .house_left .house_img_container .slide_right_container .slide_right{
+    background: url("../images/right-arrow.png");
+    background-size: cover;
+    background-position: center;
+    display: none;
+    
+    
+    width: 50px;
+    height: 50px;
+}
+
+.house .house_left .house_img_container .slide_right_container:hover .slide_right{
+    display: block;
+}
+
+
+.house .house_left .house_img_container .slide_right_container{
+    
 }
 
 .house .house_left .house_img_container .display_house_img{
@@ -44,6 +120,7 @@
     width: 20%;
     height: 80px;
     margin: 0 1px;
+    cursor: pointer;
 }
 
 /* house require css */
@@ -72,11 +149,16 @@
 
 .house .house_left .house_require_container .house_require_row .house_require_title{
     width: 62px;
-    margin: 8px;
+/*    margin: 8px;*/
     color: #666666;
     text-align: justify;
     text-align-last: justify;
     -moz-text-align-last: justify;
+}
+
+.house .house_left .house_require_container .house_require_row .house_separate{
+    font-weight: bold;
+    margin: 0px 4px 0px 8px;
 }
 
 .house .house_left .house_require_container .house_require_row .house_require_detail{
@@ -115,8 +197,10 @@
 .house .house_left .house_device_container .house_device_row .house_device_img{
     width: 30px;
     height: 26px;
+/*
     background: url("../images/check.jpg");
     background-size: cover;
+*/
 }
 
 .house .house_left .house_device_container .house_device_row .house_device{
@@ -133,7 +217,7 @@
     flex-wrap: wrap;
     
     width: 100%;
-    margin: 8px;
+/*    margin: 8px;*/
     padding: 24px 0;
     background-color: white;
     border-radius: 4px;
@@ -163,21 +247,23 @@
 }
 
 /* house question css */
-.house .house_left .house_ask_container{
+.house .house_left .house_question_container{
     margin: 8px;
+    width: 100%;
 }
 
 .house .house_left .house_ask_container .house_question_title{
 
 }
 
-.house .house_left .house_ask_container .house_question_title{
+.house .house_left .house_ask_container .house_question_row{
 
 }
 
 /* house ask css */
-.house .house_left .house_question_container{
+.house .house_left .house_ask_container{
     margin: 8px;
+    width: 100%;
 }
 
 .house .house_left .house_ask_container .house_ask_title{
@@ -198,7 +284,7 @@
     cursor: pointer;
     border-radius: 8px;
     color: white;
-/*    margin-left: 8px;*/
+    margin-left: 8px;
 }
 
 /* house right css */
@@ -330,4 +416,64 @@
     .house .house_right .owner_info_container .owner_phone_container .owner_phone{
         font-size: 22px;
     } 
+}
+
+@media(max-width: 767px){
+    .house{
+/*        width: 90%;*/
+        
+    }
+    
+    .house .house_left{
+        width: calc(100% - 16px);
+/*        margin: 0px auto;*/
+    }
+
+    
+    .house .house_left .house_require_container .house_require_row{
+        font-size: 8px;
+    }
+    
+    .house .house_left .house_require_container .house_require_row .house_require_title{
+        width: 58px;
+        margin: 0;
+    }
+    
+    /* house device < 768px */
+    .house .house_left .house_device_container .house_device_title{
+        font-size: 16px;
+        margin: 12px 8px;
+    }
+
+    .house .house_left .house_device_container .house_device_row .house_device_img{
+        width: 16px;
+        height: 16px;
+    }
+
+    .house .house_left .house_device_container .house_device_row .house_device{
+        margin: 4px 4px;
+        font-size: 12px;
+    }
+    
+    /* house surrounding < 768px css */
+    .house .house_left .house_surrounding_container > p{
+        font-size: 12px;
+    }
+    
+    .house .house_left .house_surrounding_container .house_surrounding_title{
+        font-size: 16px;
+    }
+    
+    /* house detail  < 768px */
+    .house .house_left .house_detail_container > p{
+        font-size: 12px;
+    }
+
+    .house .house_left .house_detail_container .house_detail_title{
+        font-size: 16px;
+    }
+
+    .house .house_right{
+        display: none;
+    }
 }
