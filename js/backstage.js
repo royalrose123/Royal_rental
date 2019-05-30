@@ -3,6 +3,8 @@ firebaseData = database.ref("house")
 firebaseData.on('value', function(snapshot) {
     getData = snapshot.val();
     houseSubmit();
+    console.log("getData")
+    console.log(getData)
 });
 
 var getUser;
@@ -29,7 +31,6 @@ app.get("#uploadHouseImg").addEventListener("change", function(){
     uploadImgs[currentImg] = file
 })
 
-
 /* support ID 10, Chrome 7 */
 /* use FileReader to display images */
 let currentImg = 0;
@@ -48,7 +49,7 @@ function readURL(input){
     }
     houseImgArr.push(currentImg)
     uploadImgArr[currentImg] = input.files[0]; /* firebase img arr*/
-//    console.log(uploadImgArr);
+    console.log(uploadImgArr);
     createImg(currentImg)
     if(input.files && input.files[0]){
         var reader = new FileReader();
@@ -58,7 +59,6 @@ function readURL(input){
         reader.readAsDataURL(input.files[0]);
     }
 }
-
 
 function createImg(newImg){
     app.createElement("div","houseImgContainer" + newImg, "house_img_container", "houseImgRight", "", "")
@@ -96,10 +96,7 @@ let getFirebaseURL = [];
 let count = 0;
 
 function houseSubmit(){
-    
-
     app.get("#houseSubmit").addEventListener("click", function(){
-        
         if(!getData){
             thisPostId = 0;
         }else{
@@ -147,34 +144,23 @@ function houseSubmit(){
                         break;
                 }
             }, function() {
-                let downloadURL = uploadImg.snapshot.downloadURL;
                 let pathReference = storageRef.child("images/house" + thisPostId + "_" + img);
                 pathReference.getDownloadURL().then(function(url) {
                     getFirebaseURL.push(url);
-                    localStorage.setItem("imgURL",JSON.stringify(getFirebaseURL))
-                    console.log(getFirebaseURL);
+                    count++
+                    if(count === houseImgArr.length){
+                        console.log(getFirebaseURL);
+                        setHouseData()
+                    }
                 })
             })
         })
-        setHouseData()
     }) 
 
-//        if(houseImages.length === 0){
-//            app.get("#alertBoxLayout").style.display = "flex";
-//            app.get("#alertIndex").innerHTML = "請選擇照片";
-//            return
-//        }
-//        if(!getData[0]["houseImg"]){
-//            getData[0]["houseImg"] = []
-//        }
         
-       
         
-//        setTimeout(function(){window.location = "member.html";},3000);
+//        setTimeout(function(){window.location = "rental.html";},3000);
 }
-
-
-
 
 function setHouseData(){
 //    console.log("thisPostId");
@@ -187,6 +173,11 @@ function setHouseData(){
         if(kindType[i].checked){
             kindTypeName = kindType[i].value;
         }
+    }
+    if(!kindTypeName){
+        app.get("#alertBoxLayout").style.display = "flex";
+        app.get("#alertIndex").innerHTML = "請選擇類型";
+        return
     }
         
     let deviceObj = {};
@@ -223,9 +214,11 @@ function setHouseData(){
         userPhone: getUser["phone"],
         gender: getUser["gender"],
     };
-    console.log("update thisPostId")
-    console.log(thisPostId)
-    console.log(JSON.parse(localStorage.getItem("imgURL")))
+    
+//    app.get("#alertBoxLayout").style.display = "flex";
+//        app.get("#alertIndex").innerHTML = "上傳中，請稍等。";
+//        app.get("#alertBtn").style.display = "none";
+
     var dateObject = new Date();
     database.ref("house/" + thisPostId).update({
         title: title.value,
@@ -246,7 +239,7 @@ function setHouseData(){
         others: othersObj,
         priceInclude: priceIncludeObj,
         require: requireObj,
-        houseImg: JSON.parse(localStorage.getItem("imgURL")),
+        houseImg: getFirebaseURL,
         houseSurrounding: houseSurrounding.value,
         houseDetail: houseDetail.value,
         address: regionName.value + sectionName.value + streetName.value,
@@ -269,7 +262,8 @@ function setHouseData(){
 //    uploadImg()
     app.get("#alertBoxLayout").style.display = "flex";
     app.get("#alertIndex").innerHTML = "刊登成功";
+    app.get("#alertBtn").style.display = "block";
     app.get("#alertBtn").onclick = function(){
-        window.location = "member.html";
+        window.location = "rental.html";
     }
 }

@@ -200,30 +200,112 @@
     transform: scale(1.05)
 }
 
-.member .member_display .member_fav_house .fav_house .house_img{
+.member .member_display .member_fav_house .fav_house .fav_house_img{
     width: 100%;
     height: 160px;
-    background: url("../images/006.jpeg");
-    background-size: cover;
-    background-position: center;
 }
 
-.member .member_display .member_fav_house .fav_house .house_detail{
+.member .member_display .member_fav_house .fav_house .fav_house_detail{
     width: 100%;
     height: 60px;
     position: relative;
     bottom: 40px;
 }
 
-.member .member_display .member_fav_house .fav_house .house_detail .price{
+.member .member_display .member_fav_house .fav_house .fav_house_detail .price{
     color: white;
     font-size: 24px;
     text-shadow: 1px 1px 10px black;
 }
 
-.member .member_display .member_fav_house .fav_house .house_detail > p {
+.member .member_display .member_fav_house .fav_house .fav_house_detail > p {
     font-size: 8px;
     margin: 8px;
+}
+
+/* member post css */
+.member .member_display .member_post{
+    width: 100%;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.member .member_display .member_post .post_container{
+    margin: 6px 0px;
+}
+
+.member .member_display .member_post .post_container .post{
+    width: 180px;
+    height: 180px;
+    margin: 8px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    position: relative;
+    border: 1px solid #bbbbbb;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.9s;
+}
+
+.member .member_display .member_post .post_container .post:hover{
+    transform: scale(1.05)
+}
+
+
+.member .member_display .member_post .post_container .post .house_img{
+    width: 100%;
+    height: 160px;
+    background: url("../images/006.jpeg");
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.member .member_display .member_post .post_container .post .house_detail{
+    width: 100%;
+    height: 60px;
+    position: relative;
+    bottom: 40px;
+}
+
+.member .member_display .member_post .post_container .post .house_detail .price{
+    color: white;
+    font-size: 24px;
+    text-shadow: 1px 1px 10px black;
+}
+
+.member .member_display .member_post .post_container .post .house_detail > p {
+    font-size: 8px;
+    margin: 8px;
+}
+
+/* post btn css */
+.member .member_display .member_post .post_container .post_btn_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.member .member_display .member_post .post_container .post_btn_container .post_btn{
+    font-size: 14px;
+    color: white;
+    background-color: rgb(26, 216, 211);
+    width: 60px;
+    height: 16px;
+    line-height: 16px;
+    margin: 0px 8px;
+    padding: 6px;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
 }
 
 @media(max-width: 991px){

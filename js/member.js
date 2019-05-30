@@ -1,6 +1,8 @@
 var getUser;
 var thisUser;
 var thisUserId;
+var userPostIdArr;
+var userFavIdArr;
 firebase.auth().onAuthStateChanged(function(user){ 
     if(user){
         thisUser = user;
@@ -10,12 +12,23 @@ firebase.auth().onAuthStateChanged(function(user){
         console.log("尚未登入");
     }
 
-    var firebaseUser = database.ref("member/" + thisUserId)
+    var firebaseUser = database.ref("member/" + thisUserId);
     firebaseUser.once("value", function(snapshot){
         getUser = snapshot.val();
+        
         createMemberDisplay();
+        app.get("#memberDataBtn").addEventListener("click",memberBarClick);
+        app.get("#favHouseBtn").addEventListener("click",memberBarClick);
+        app.get("#myHouseBtn").addEventListener("click",memberBarClick);
         getFirebaseUser();
+        
     })
+})
+
+var getAllData;
+var firebaseHouse = database.ref("house");
+firebaseHouse.on('value', function(snapshot) {
+    getAllData = snapshot.val();
 })
 
 function getFirebaseUser(){
@@ -23,7 +36,6 @@ function getFirebaseUser(){
     console.log(getUser["gender"]);
     
     setDefaultGender()
-    
     app.get("#memberId").value = getUser.userId;
     if(!getUser.userName){
         app.get("#memberName").placeholder = "請輸入姓名" 
@@ -51,11 +63,36 @@ function userLogout(){
     window.location = "rental.html";
 }
 
+/* member bar btn click */
+app.member.memberLayoutDisplay = (layoutBlock,layoutNone1,layoutNone2) =>{
+    app.get(layoutBlock).style.display = "flex";
+    app.get(layoutNone1).style.display = "none";
+    app.get(layoutNone2).style.display = "none";
+}
+
+function memberBarClick(e){
+    memberBarBtn = e.target.id;
+    if(memberBarBtn == "memberDataBtn"){
+        app.member.memberLayoutDisplay("#memberData","#memberFavHouse","#memberPost");
+    }else if(memberBarBtn == "favHouseBtn"){
+        app.member.memberLayoutDisplay("#memberFavHouse","#memberPost","#memberData");
+    }else if(memberBarBtn == "myHouseBtn"){
+        app.member.memberLayoutDisplay("#memberPost","#memberData","#memberFavHouse");
+    }
+}
+
+
+
+
 /* create member display */
 function createMemberDisplay(){
     app.createElement("div","memberDisplay","member_display","member","","");
     createMemberData();
+    createMemberFavHouse();
+    createMemberPost();
+    app.member.memberLayoutDisplay("#memberData","#memberFavHouse","#memberPost");
 }
+
 
 /* create member data */
 function createMemberData(){
@@ -207,6 +244,88 @@ function setDefaultGender(){
     for(let i = 0; i < selectGender.length; i++){
         if(selectGender[i].value === userGender){
              selectGender[i].checked = true;
+        }
+    }
+}
+
+/* create member favorite house */
+function createMemberFavHouse(){
+    userFavIdArr = getUser["userFac"]
+    console.log("userFavIdArr");
+    console.log(userFavIdArr)
+    app.createElement("div","memberFavHouse","member_fav_house","memberDisplay","","");
+    
+    if(!userFavIdArr){
+        app.createElement("p","","","memberFavHouse","目前沒有收藏","");
+    }else{
+        userFavIdArr.map((postId)=>{
+            app.createElement("div","favHouse" + postId,"fav_house","favHouse","","");
+            app.createElement("div","favHouseImg" + postId,"fav_house_img","favHouse" + postId,"","");
+            app.get("#favHouseImg" + postId).style.background = "url('" + getAllData[postId]["houseImg"][0] + "') 50% / cover no-repeat";
+            app.createElement("div","favHouseDetail" + postId,"fav_house_detail","favHouse" + postId,"","");
+            app.createElement("p","favPrice","price","favHouseDetail"+ postId,getAllData[postId]["price"],"");
+             app.createElement("p","fav_Room","","favHouseDetail" + postId,getAllData[postId]["bedroom"] + "間房間、" + getAllData[postId]["restroom"] +"間廁所","");
+            app.createElement("p","favSectionName","section_name","favHouseDetail" + postId,getAllData[postId]["sectionName"],"");
+            app.get("#post" + postId).onclick = function(){
+                location.href= "house.html?id=" + getAllData[postId]["postId"]
+            }
+        })
+    }
+    
+    
+//    app.createElement("div","favHouse","fav_house","memberFavHouse","","");
+//    app.createElement("div","favHouseImg","fav_house_img","favHouse","","");
+    
+//    app.createElement("div","favHouseDetail","fav_house_detail","favHouse","","");
+//    app.createElement("p","price","price","favHouseDetail","36,858","");
+//    app.createElement("p","room","","favHouseDetail","一間房間、一間廁所","");
+//    app.createElement("p","sectionName","section_name","favHouseDetail","大安區","");
+} 
+
+/* create member post */
+function createMemberPost(){
+    userPostIdArr = getUser["userPost"];
+    app.createElement("div","memberPost","member_post","memberDisplay","","");
+    if(!userPostIdArr){
+        app.createElement("p","","","memberPost","目前沒有刊登","");
+    }else{
+        userPostIdArr.map((postId)=>{
+            app.createElement("div","postConatiner" + postId,"post_container","memberPost","","");
+            
+            app.createElement("div","post" + postId,"post","postConatiner" + postId,"","");
+            app.createElement("div","postHouseImg" + postId,"house_img","post" + postId,"","");
+            app.get("#postHouseImg" + postId).style.background = "url('" + getAllData[postId]["houseImg"][0] + "') 50% / cover no-repeat";
+            app.createElement("div","postHouseDetail" + postId,"house_detail","post" + postId,"","");
+            app.createElement("p","postPrice","price","postHouseDetail"+ postId,getAllData[postId]["price"],"");
+             app.createElement("p","postRoom","","postHouseDetail" + postId,getAllData[postId]["bedroom"] + "間房間、" + getAllData[postId]["restroom"] +"間廁所","");
+            app.createElement("p","postSectionName","section_name","postHouseDetail" + postId,getAllData[postId]["sectionName"],"");
+            app.get("#post" + postId).onclick = function(){
+                location.href= "house.html?id=" + getAllData[postId]["postId"]
+            }
+            app.createElement("div","postBtnContainer" + postId,"post_btn_container","postConatiner" + postId,"","");
+            app.createElement("div","postModifyBtn" + postId,"post_btn","postBtnContainer" + postId,"修改",app.member.postModify);
+            app.createElement("div","postDeleteBtn" + postId,"post_btn","postBtnContainer" + postId,"刪除",app.member.postDelete);
+            app.get("#postModifyBtn" + postId).setAttribute("data-postId",postId);
+            app.get("#postDeleteBtn" + postId).setAttribute("data-postId",postId);
+        })
+    }
+}
+
+app.member.postModify = (e) =>{
+    let thisPostId = e.target.getAttribute("data-postId");
+    location.href= "house.html?id=" + thisPostId
+    console.log(thisPostId)
+}
+
+app.member.postDelete = (e) =>{
+    let thisPostId = e.target.getAttribute("data-postId");
+    database.ref("house/" + thisPostId).remove(); /* delete firebase house  */
+    thisCard = app.get("#postConatiner" + thisPostId)
+    thisCard.parentNode.removeChild(thisCard); /* remove member post display */
+    for(let i = 0; i < userPostIdArr.length; i++){
+        if(thisPostId == getUser["userPost"][i]){
+            database.ref("member/" + thisUserId + "/userPost/" + i).remove(); /* delete firbase member userPost */
+            userPostIdArr.splice(i, 1);
         }
     }
 }
