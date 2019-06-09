@@ -1,0 +1,364 @@
+.backstage_poster{
+    width: 100%;
+    height: 380px;
+    background: url("../images//backstage_poster.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.backstage_poster >p{
+    width: 160px;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(128,128,128,0.7);
+    padding: 6px;
+    padding-left: 13px;
+    border-radius: 5px;
+    letter-spacing: 10px;
+    text-align: center;
+}
+
+/* backstage css */
+.backstage{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0 auto;
+    position: relative;
+/*    background-color: blue;*/
+}
+.backstage > div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 16px 0px;
+}
+
+.backstage > div > p{
+    margin: 6px;
+    width: 64px;
+}
+
+.backstage > div > input{
+    width: 200px;
+    height: 28px;
+    padding: 4px;
+    font-size: 16px;
+}
+
+.backstage > .title_container > .user_name.disabled{
+    background-color: white;
+    border: none;
+    color: black;
+    font-weight: 200;
+}
+
+/* kind type css*/
+.backstage .kind_type_container > label{
+    font-size: 16px;
+    margin: 8px;
+}
+
+/* device css */
+.backstage .device_container .device_title_container{
+    margin: 8px;
+    width: 48px;
+}
+
+.backstage .device_container .device_title_container > p{
+    width: 48px;
+}
+
+.backstage .device_container .device_check_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    margin: 8px;
+}
+
+.backstage .device_container .device_check_container > label{
+    width: 132px;
+    margin: 8px 0px;
+}
+
+/* others css */
+.backstage .others_container .others_title_container{
+    margin: 8px;
+    width: 48px;
+}
+
+.backstage .others_container .others_title_container > p{
+    width: 48px;
+}
+
+.backstage .others_container .others_check_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+/*    width: 800px;*/
+    margin: 8px;
+}
+
+.backstage .others_container .others_check_container > label{
+    width: 132px;
+    margin: 8px 0px;
+}
+
+/* price include css */
+.backstage .price_include_container .price_include_title_container{
+    margin: 8px;
+    width: 48px;
+}
+
+.backstage .price_include_container .price_include_title_container > p{
+    width: 56px;
+}
+
+.backstage .price_include_container .price_include_check_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+/*    width: 800px;*/
+    margin: 8px;
+}
+
+.backstage .price_include_container .price_include_check_container > label{
+    width: 132px;
+    margin: 8px 0px;
+}
+
+/* house images css */
+.backstage .house_img_row .house_img_left{
+    margin: 8px;
+    width: 48px;
+}
+
+.backstage .house_img_row .house_img_right{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.backstage .house_img_row .house_img_right .house_img_container{
+    width: 150px;
+    height: 150px;
+    margin: 8px;
+    
+    position: relative;
+}
+
+.backstage .house_img_row .house_img_right .house_img_container .house_img_cover{
+    width: inherit;
+    height: inherit;
+    background-color: transparent;
+    
+    position: absolute;
+    left: 0px;
+    top: 0px;
+/*    z-index: 1;*/
+    transition: all 0.2s;
+} 
+
+.backstage .house_img_row .house_img_right .house_img_container .house_img_cover:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.backstage .house_img_row .house_img_right .house_img_container .house_img{
+    width: inherit;
+    height: inherit;
+}
+
+.backstage .house_img_row .house_img_right .house_img_container .house_img_delete{
+    display: none;
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 2px;
+    color: gainsboro;
+    cursor: pointer;
+    z-index: 2;
+    
+}
+
+.backstage .house_img_row .house_img_right .house_img_container .house_img_cover:hover .house_img_delete{
+    display: block;
+}
+
+/* house surrouding css */
+.backstage .house_surrounding_container .house_surrounding_title{
+    width: 64px;
+    
+}
+.backstage .house_surrounding_container .house_surrounding{
+    font-size: 16px;
+    padding: 8px;
+    line-height: 28px;
+    letter-spacing: 3px;
+    width: 70%;
+    height: 300px;
+    margin: 12px;
+}
+
+/* house detail css */
+.backstage .house_detail_container .house_detail_title{
+    width: 64px;
+}
+
+.backstage .house_detail_container .house_detail{
+    font-size: 16px;
+    padding: 8px;
+    line-height: 28px;
+    letter-spacing: 3px;
+    width: 70%;
+    height: 300px;
+    margin: 12px;
+}
+
+/* house edit css */
+.backstage .house_edit_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    width: 160px;
+    position: absolute;
+    right: 20%;
+    bottom: -2.5%;
+}
+
+.backstage .house_edit_container .house_edit_btn{
+    font-size: 18px;
+    background-color: rgb(26, 216, 211);
+    width: 36px;
+    text-align: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    color: white;
+    margin: 0px 8px;
+}
+
+
+@media(max-width: 991px){
+    .backstage > div > p{
+        margin: 4px;
+        width: 60px;
+        font-size: 14px;
+    }
+    
+    .backstage > div > input{
+        width: 120px;
+        height: 20px;
+        padding: 4px;
+        font-size: 12px;
+    }
+    
+    .backstage  div > label{
+        font-size:  14px !important;
+    }
+    
+    .backstage div div > p{
+        font-size: 14px;
+    }
+    
+    .backstage .house_edit_container{
+        width: 100%;
+        margin-top: 0px;
+        right: 16%;
+    }
+
+    .backstage .house_edit_container .house_edit_btn{
+        font-size: 18px;
+        width: 36px;
+        padding: 8px 12px;
+    }
+}
+
+@media(max-width: 767px){
+    .backstage{
+/*        margin: 0;*/
+    }
+    
+    .backstage > div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 16px 0px;
+    }
+    
+    .backstage > div > p{
+        margin: 12px 0;
+        width: 72px;
+        font-size: 18px;
+    }
+
+    .backstage > div > input{
+        width: 200px;
+        height: 28px;
+        padding: 4px;
+        font-size: 16px;
+    }
+    
+    .backstage .device_container .device_check_container > label{
+        width: 50%;
+    }
+    
+    /* house surrouding < 768px */
+    .backstage .house_surrounding_container .house_surrounding_title > p{
+        width: 72px;
+        margin: 0 8px;
+    }
+    
+    .backstage .house_surrounding_container .house_surrounding{
+        font-size: 12px;
+        line-height: 18px;
+        height: 200px;
+    }
+
+    /* house detail css */
+    .backstage .house_detail_container .house_detail_title > p{
+        width: 72px;
+        margin: 0 8px;
+    }
+
+    .backstage .house_detail_container .house_detail{
+        font-size: 12px;
+        line-height: 18px;
+        height: 200px;
+    }
+
+    /* house edit css */
+    .backstage .house_edit_container{
+        justify-content: center;
+        right: -10%;
+        bottom: -1.5%;
+    }
+
+    .backstage .house_edit_container .house_edit_btn{
+        margin: 0px 8px;
+    }
+
+}

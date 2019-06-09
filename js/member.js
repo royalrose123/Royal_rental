@@ -29,6 +29,8 @@ var getAllData;
 var firebaseHouse = database.ref("house");
 firebaseHouse.on('value', function(snapshot) {
     getAllData = snapshot.val();
+    console.log("getAllData");
+    console.log(getAllData)
 })
 
 function getFirebaseUser(){
@@ -140,6 +142,10 @@ function createMemberData(){
     
     app.member.unModify("#memberDataModify","#memberDataConfirm","#memberDataCancel");
     app.member.disabled("#memberName","#memberPhone","#memberGenderMale","#memberGenderFemale");
+
+    app.createElement("div","alertBtnContainer","alert_btn_container","alertBox","","")
+    app.createElement("p","alertBtnConfirm","alert_btn","alertBtnContainer","確定",app.member.postDeleteConfirm)
+    app.createElement("p","alertBtnCancel","alert_btn","alertBtnContainer","取消","")
 }
 
 app.member.isModify = (memberDataModify,memberDataConfirm,memberDataCancel) =>{
@@ -212,7 +218,7 @@ app.member.memberDataConfirm = function(){
     firebaseUser.once("value", function(snapshot){
         getUser = snapshot.val();
     })
-    
+
     app.member.unModify("#memberDataModify","#memberDataConfirm","#memberDataCancel");
     app.member.disabled("#memberName","#memberPhone","#memberGenderMale","#memberGenderFemale");
 }
@@ -250,9 +256,9 @@ function setDefaultGender(){
 
 /* create member favorite house */
 function createMemberFavHouse(){
-    userFavIdArr = getUser["userFac"]
-    console.log("userFavIdArr");
-    console.log(userFavIdArr)
+    userFavIdArr = getUser["userFav"]
+    // console.log("userFavIdArr");
+    // console.log(userFavIdArr)
     app.createElement("div","memberFavHouse","member_fav_house","memberDisplay","","");
     
     if(!userFavIdArr){
@@ -271,20 +277,13 @@ function createMemberFavHouse(){
             }
         })
     }
-    
-    
-//    app.createElement("div","favHouse","fav_house","memberFavHouse","","");
-//    app.createElement("div","favHouseImg","fav_house_img","favHouse","","");
-    
-//    app.createElement("div","favHouseDetail","fav_house_detail","favHouse","","");
-//    app.createElement("p","price","price","favHouseDetail","36,858","");
-//    app.createElement("p","room","","favHouseDetail","一間房間、一間廁所","");
-//    app.createElement("p","sectionName","section_name","favHouseDetail","大安區","");
 } 
 
 /* create member post */
 function createMemberPost(){
     userPostIdArr = getUser["userPost"];
+    console.log("userPostIdArr")
+    console.log(userPostIdArr)
     app.createElement("div","memberPost","member_post","memberDisplay","","");
     if(!userPostIdArr){
         app.createElement("p","","","memberPost","目前沒有刊登","");
@@ -313,19 +312,73 @@ function createMemberPost(){
 
 app.member.postModify = (e) =>{
     let thisPostId = e.target.getAttribute("data-postId");
-    location.href= "house.html?id=" + thisPostId
+    location.href= "edit.html?id=" + thisPostId;
     console.log(thisPostId)
 }
 
+let thisPostId;
+let thisPostImg;
+let thisCard;
 app.member.postDelete = (e) =>{
-    let thisPostId = e.target.getAttribute("data-postId");
-    database.ref("house/" + thisPostId).remove(); /* delete firebase house  */
+    thisPostId = e.target.getAttribute("data-postid");
+    thisPostImg = getAllData[thisPostId]["houseImg"]
+    console.log("確認前thisPostId")
+    console.log(thisPostId)
     thisCard = app.get("#postConatiner" + thisPostId)
-    thisCard.parentNode.removeChild(thisCard); /* remove member post display */
-    for(let i = 0; i < userPostIdArr.length; i++){
-        if(thisPostId == getUser["userPost"][i]){
-            database.ref("member/" + thisUserId + "/userPost/" + i).remove(); /* delete firbase member userPost */
-            userPostIdArr.splice(i, 1);
+    
+    app.get("#alertBoxLayout").style.display = "flex";
+    app.get("#alertIndex").innerHTML = "確定要刪除嗎";
+    app.get("#alertBtn").style.display = "none"
+    app.get("#alertBtnCancel").addEventListener("click",function(){
+        app.get("#alertBoxLayout").style.display = "none";
+    })
+}
+
+app.member.postDeleteConfirm = () =>{
+    for(let i = 0; i < thisPostImg.length; i++){
+        // Create a reference to the file to delete
+        let imgRef = storageRef.child("images/house" + thisPostId + "_" + i);
+        // Delete the file
+        imgRef.delete().then(function() {  /* delete firebase storage img */
+        // File deleted successfully
+        }).catch(function(error) {
+        // Uh-oh, an error occurred!
+        console.log(error)
+        });
+        console.log("i = " + i)
+        if(i == thisPostImg.length - 1){
+            console.log("確認後thisPostId")
+            console.log(thisPostId)
+            console.log("刪除前userPostIdArr")
+            console.log(userPostIdArr)
+            database.ref("house/" + thisPostId).remove().then(function(result){
+                console.log("result")
+                console.log(result)
+            }).catch(function(err){
+                console.log("err")
+                console.log(err)
+            }); /* delete firebase house  */
+            for(let j = 0; j < userPostIdArr.length; j++){
+
+                if(thisPostId == getUser["userPost"][j]){
+                    database.ref("member/" + thisUserId + "/userPost/" + j).remove(); /* delete firbase member userPost */
+                    userPostIdArr.splice(j, 1);
+                    console.log("刪除後userPostIdArr")
+                    console.log(userPostIdArr)
+                    console.log("thisCard");
+                    console.log(thisCard);
+                    // let memberPost = app.get("#memberPost");
+                    thisCard.parentNode.removeChild(thisCard); /* remove member post display */
+                    // break;
+                }
+            }
+            
+            // alert("刪除完成")
         }
     }
+    app.get("#alertBoxLayout").style.display = "none";
 }
+
+// app.get("#alertBtnConfirm").addEventListener("click",function(){
+    
+// })

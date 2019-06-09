@@ -2,12 +2,15 @@ let checkUser;
 firebase.auth().onAuthStateChanged(function(user){ 
     checkUser = user;
     if(user){
-        app.get("#loginBtn").style.display = "none";
-        app.get("#memberBtn").style.display = "block";
+       if(user.emailVerified){
+           app.get("#loginBtn").style.display = "none";
+           app.get("#memberBtn").style.display = "block";
+       }
     }else{
         app.get("#loginBtn").style.display = "block";
         app.get("#memberBtn").style.display = "none";
     }
+    
 })
 
 /* create nav */

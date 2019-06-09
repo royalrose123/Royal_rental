@@ -10,6 +10,8 @@ firebaseData.on("value", function(snapshot){
     console.log(thisData)
 })
 
+let getUser;
+let thisUserId;
 function getThisArticle(){
     var thisPostId = new URL(document.location).searchParams.get("id");
     console.log("thisPostId = " + thisPostId)
@@ -18,6 +20,12 @@ function getThisArticle(){
             thisData.push(getData[i])
         }
     }
+    thisUserId = thisData[0]["postUserId"]
+    let firebaseUser = database.ref("member/" + thisUserId)
+    firebaseUser.on("value", function(snapshot){
+        getUser= snapshot.val();
+        createOwnerInfo()
+    })
 }
 
 /* house left */
@@ -56,7 +64,6 @@ function showThisImg(e){
         app.get("#houseImgSelector" + thisImg).style.border = "1px solid orange"
         app.get("#houseImgSelector" + originImg).style.border = "none"  
     }
-    
     originImg = thisImg;
 }
 
@@ -97,7 +104,7 @@ function createHouseData(){
         count++;
     }
     
-    /* create device require */
+    /* create device */
     app.createElement("p","","house_device_title","houseDeviceContainer","房東提供","");
     for(key in thisData[0]["device"]){
         app.createElement("div","houseDeviceRow" + count,"house_device_row","houseDeviceContainer","","");
@@ -134,8 +141,7 @@ function createHouseData(){
 
 /* house right */
 function createHouseRight(){
-    createHouseInfo()
-    createOwnerInfo()
+    createHouseInfo();
 }
 
 function createHouseInfo(){
@@ -150,7 +156,6 @@ function createHouseInfo(){
         }
     }
     app.createElement("p","housePriceInclude","house_price_include","housePriceContainer",priceInclude,"");
-    
     /* house info */
     app.createElement("ul","houseInfoLists","house_info_lists","houseInfoContainer","","");
     app.createElement("li","","house_info","houseInfoLists","坪數：" + thisData[0]["size"] + "坪","");
@@ -165,18 +170,16 @@ function createOwnerInfo(){
     app.createElement("div","owner","owner","ownerContainer","","");
     app.createElement("div","ownerPhoto","owner_photo","owner","","");
     let gender = "";
-    if(thisData[0]["postUser"]["gender"] === "male"){
+    if(getUser["gender"] === "male"){
         gender = "先生"
-    }else if(thisData[0]["postUser"]["gender"] === "female"){
+    }else if(getUser["gender"] === "female"){
         gender = "小姐"
     }
-    let userName = thisData[0]["postUser"]["userName"].substr(0,1) + gender
+    let userName = getUser["userName"].substr(0,1) + gender
     app.createElement("p","ownerName","owner_name","owner",userName,"");
-    console.log("user")
-    console.log(thisData[0]["postUser"]["userName"].substr(0,1))
     /* owner phone */
     app.createElement("div","ownerPhoneContainer","owner_phone_container","ownerContainer","","");
      app.createElement("div","ownerPhoneImg","owner_phone_img","ownerPhoneContainer","","");
     
-    app.createElement("p","ownerPhone","owner_phone","ownerPhoneContainer",thisData[0]["postUser"]["userPhone"],"");
+    app.createElement("p","ownerPhone","owner_phone","ownerPhoneContainer",getUser["phone"],"");
 }

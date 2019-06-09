@@ -19,6 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0px 8px;
     
 }
 
@@ -44,7 +45,7 @@
 }
 
 .house .house_left .house_img_container .slide_left_container:hover{
-    background-color: rgba(0, 0, 0, 0.3)
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .house .house_left .house_img_container .slide_left_container .slide_left{

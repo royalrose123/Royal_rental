@@ -22,7 +22,7 @@ function createLogLayout(){
 }
 
 app.get("#loginBtn").addEventListener("click",function(){
-    createLogLayout()
+    createLogLayout();
 })
 
 app.log.createAccount = function(){
@@ -45,7 +45,7 @@ app.log.createAccount = function(){
 }
 
 var userLogin;
-var getError = false;
+//var getError = false;
 
 app.log.logInClick = function(){
     firebase.auth().onAuthStateChanged(function(user){
@@ -63,8 +63,8 @@ app.log.logInClick = function(){
         }
 
         userLogin = firebase.auth().currentUser;
-//        console.log("userLogin = ");
-//        console.log(userLogin);
+       console.log("userLogin = ");
+       console.log(userLogin);
 
         firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
             if(error.code == "auth/wrong-password"){
@@ -79,9 +79,13 @@ app.log.logInClick = function(){
             }
         });
 
-        if(getError === true){
-            getError = false;
-        }else{
+//        if(getError === true){
+//            getError = false;
+//        }else{
+        
+        if(user){
+            console.log("user.emailVerified")
+            console.log(user.emailVerified)
             if(user.emailVerified){
                 app.get("#alertBoxLayout").style.display = "flex";
                 app.get("#alertIndex").innerHTML = "登入中";
@@ -90,8 +94,10 @@ app.log.logInClick = function(){
             }else {
                 app.get("#alertBoxLayout").style.display = "flex";
                 app.get("#alertIndex").innerHTML = "信箱密碼有誤，或尚未驗證2。";
-            } 
+            }
         }
+             
+//        }
     })
 }
 

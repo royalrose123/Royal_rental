@@ -19,9 +19,21 @@ firebase.auth().onAuthStateChanged(function(user){
     var firebaseUser = database.ref("member/" + thisUserId)
     firebaseUser.once("value", function(snapshot){
         getUser = snapshot.val();
+        checkMemberData()
         setMemberData();
     })
 })
+
+function checkMemberData(){
+    if(!getUser["gender"]){
+        app.get("#alertBoxLayout").style.display = "flex";
+        app.get("#alertIndex").innerHTML = "請先填寫會員資料。";
+        app.get("#alertBtn").style.display = "block";
+        app.get("#alertBtn").onclick = function(){
+            window.location = "member.html";
+        }
+    }
+}
 
 /* select imgage */
 var uploadImgs = {};
@@ -87,6 +99,19 @@ function setMemberData(){
     app.get("#userName").setAttribute("disabled","");
 }
 
+/* set address to lat lag */
+let addressData;
+function addressToLatLng(address){
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': address}, function(results, status){
+        if(status === "OK"){
+            console.log("status")
+            console.log(status)
+            localStorage.setItem("address",JSON.stringify(results[0])) 
+        }
+    })
+}
+
 /* house submit */
 let prevPostId;
 let thisPostId;
@@ -96,7 +121,11 @@ let getFirebaseURL = [];
 let count = 0;
 
 function houseSubmit(){
+
     app.get("#houseSubmit").addEventListener("click", function(){
+        let address = regionName.value + sectionName.value + streetName.value;
+        addressToLatLng(address)
+        
         if(!getData){
             thisPostId = 0;
         }else{
@@ -109,7 +138,7 @@ function houseSubmit(){
             houseImages.push(thisImgUrl);
             
             let storageRef = storage.ref();
-            let uploadImg = storageRef.child("images/house" + thisPostId + "_" + img).put(uploadImgArr[img]);
+            let uploadImg = storageRef.child("images/house" + thisPostId + "_" + i).put(uploadImgArr[img]);
 
         //     Listen for state changes, errors, and completion of the upload.
             uploadImg.on("state_changed",function(snapshot) {
@@ -144,21 +173,21 @@ function houseSubmit(){
                         break;
                 }
             }, function() {
-                let pathReference = storageRef.child("images/house" + thisPostId + "_" + img);
+                let pathReference = storageRef.child("images/house" + thisPostId + "_" + i);
                 pathReference.getDownloadURL().then(function(url) {
                     getFirebaseURL.push(url);
-                    count++
+                    count++;
                     if(count === houseImgArr.length){
-                        console.log(getFirebaseURL);
-                        setHouseData()
+                        addressData = JSON.parse(localStorage.getItem("address"));
+                        setHouseData();
                     }
                 })
             })
+            app.get("#alertBoxLayout").style.display = "flex";
+            app.get("#alertBtn").style.display = "none";
+            app.get("#alertIndex").innerHTML = "上傳中，請稍等。";
         })
     }) 
-
-        
-        
 //        setTimeout(function(){window.location = "rental.html";},3000);
 }
 
@@ -208,27 +237,18 @@ function setHouseData(){
         requireObj[require[i].name] = require[i].value;
     }
     
-    let userObj = {
-        userName: getUser["userName"],
-        userId: getUser["userId"],
-        userPhone: getUser["phone"],
-        gender: getUser["gender"],
-    };
-    
-//    app.get("#alertBoxLayout").style.display = "flex";
-//        app.get("#alertIndex").innerHTML = "上傳中，請稍等。";
-//        app.get("#alertBtn").style.display = "none";
-
     var dateObject = new Date();
     database.ref("house/" + thisPostId).update({
         title: title.value,
         postId: thisPostId,
-        postUser: userObj,
+        postUserId: getUser["userId"],
+        postUserPhone: getUser["phone"],
+        postUserName: getUser["userName"],
         regionName: regionName.value,
         sectionName: sectionName.value,
         streetName: streetName.value,
-        price: price.value,
-        size: size.value,
+        price: Number(price.value),
+        size: Number(size.value),
         bedroom: bedroom.value,
         restroom: restroom.value,
         livingroom: livingroom.value,
@@ -242,7 +262,8 @@ function setHouseData(){
         houseImg: getFirebaseURL,
         houseSurrounding: houseSurrounding.value,
         houseDetail: houseDetail.value,
-        address: regionName.value + sectionName.value + streetName.value,
+        address: addressData.formatted_address,
+        latLng: addressData.geometry.location,
         createTime: dateObject.getTime(),
         lastUpdateTime: dateObject.getTime(),
         houseQuestion: []
@@ -260,7 +281,6 @@ function setHouseData(){
         userPost: preUserPost,
     })
 //    uploadImg()
-    app.get("#alertBoxLayout").style.display = "flex";
     app.get("#alertIndex").innerHTML = "刊登成功";
     app.get("#alertBtn").style.display = "block";
     app.get("#alertBtn").onclick = function(){

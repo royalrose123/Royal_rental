@@ -2,6 +2,7 @@ let app = {
     backstage: {},
     log: {},
     member: {},
+    rental: {},
 }
 
 app.get = function( selector ){

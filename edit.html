@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>刊登後台</title>
+    <title>修改刊登</title>
     
     
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
-    <link rel="stylesheet" type="text/css" href="css/backstage.css">
+    <link rel="stylesheet" type="text/css" href="css/edit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
@@ -28,23 +28,23 @@
         
         <div id='titleContainer' class="title_container">
             <p>標題</p>
-            <input id="title" class="title" value="高級套房">
+            <input id="title" class="title" value="">
             <p>屋主</p>
             <input id="userName" class="user_name">
         </div>
         <div id='regionNameContainer' class="region_name_container">
             <p>縣市</p>
-            <input id="regionName" class="region_name" placeholder="台北市" value="台北市">
+            <input id="regionName" class="region_name" placeholder="台北市" value="">
             <p>行政區</p>
-            <input id="sectionName" class="section_name" placeholder="大安區" value="大安區">
+            <input id="sectionName" class="section_name" placeholder="大安區" value="">
             <p>街道</p>
-            <input id="streetName" class="street_name" placeholder="和平東路56號" value="和平東路56號">
+            <input id="streetName" class="street_name" placeholder="和平東路56號" value="">
         </div>
         <div id="priceSizeContainer" class="price_size_container">
             <p>價錢</p>
-            <input id="price" class="price" placeholder="4000" value="16800">
+            <input id="price" class="price" placeholder="4000" value="">
             <p>坪數</p>
-            <input id="size" class="size" placeholder="12坪" value="12">
+            <input id="size" class="size" placeholder="12坪" value="">
         </div>
         <div id="roomContainer" class="room_container">
             <p>房間數量</p>
@@ -171,20 +171,20 @@
         </div>
         <div id="requireContainer" class="require_container">
             <p>押金</p>
-            <input id="requireDeposit" class="require" placeholder="一個月"  name="押金" value="一個月">
+            <input id="requireDeposit" class="require" placeholder="一個月"  name="押金" value="">
             <p>最短租期</p>
-            <input id="requireLeastPeriod" class="require" placeholder="半年"  name="最短租期" value="一年">
+            <input id="requireLeastPeriod" class="require" placeholder="半年"  name="最短租期" value="">
             <p>開伙</p>
-            <input id="requireCook" class="require" placeholder="不可以"  name="開伙" value="可以">
+            <input id="requireCook" class="require" placeholder="不可以"  name="開伙" value="">
             
         </div>
         <div id="requireContainer" class="require_container">
             <p>養寵物</p>
-            <input id="requirePet" class="require" placeholder="可以"  name="養寵物" value="不可以">
+            <input id="requirePet" class="require" placeholder="可以"  name="養寵物" value="">
             <p>身分要求</p>
-            <input id="requireIdentify" class="require" placeholder="學生、上班族、都可"  name="身分要求" value="都可">
+            <input id="requireIdentify" class="require" placeholder="學生、上班族、都可"  name="身分要求" value="">
             <p>性別要求</p>
-            <input id="requireGender" class="require" placeholder="限男生、限女生、都可"  name="性別要求" value="限女性">
+            <input id="requireGender" class="require" placeholder="限男生、限女生、都可"  name="性別要求" value="">
         </div>
         <div id="houseImgRow" class="house_img_row">
             <div id="houseImgLeft" class="house_img_left">
@@ -207,8 +207,9 @@
             </div>
             <textarea id="houseDetail" class="house_detail" name="房屋說明" cols="30" rows="10"></textarea>
         </div>
-        <div id="houseSubmitContainer" class="house_submit_container">
-            <p id="houseSubmit" class="house_submit">刊登</p>
+        <div id="houseSubmitContainer" class="house_edit_container">
+            <p id="houseEditConfirm" class="house_edit_btn">修改</p>
+            <p id="houseEditCancel" class="house_edit_btn">取消</p>
         </div>
     </section>
     
@@ -219,6 +220,5 @@
     <script src="js/lib.js"></script>
     <script src="js/common.js"></script>
     <script src="js/login.js"></script>
-    <script src="js/backstage.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO1V4ilzKx8wxo6fJ0QgIskky6lcUUhSc"></script>
+    <script src="js/edit.js"></script>
 </html>
