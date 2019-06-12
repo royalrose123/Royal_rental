@@ -1,5 +1,4 @@
 var map;
-//var markerCluster;
 function initMap() {
     map = new google.maps.Map(app.get('#map'), {
         center: {lat: 25.0244465, lng:121.5459541},
@@ -35,25 +34,32 @@ var getData;
 var firebaseData = database.ref("house")
 firebaseData.on("value", function(snapshot){
     getData = snapshot.val();
+    console.log("before getData");
+    console.log(getData)
+    getData = getData.filter(test => test)
+    console.log("after getData");
+    console.log(getData)
     getInitData();
     setMarkOnMap(getData);
     createrRoomFilter();
     createKindTypeFilter();
-    
 })
 
 var marker;
 var markers = [];
 function setMarkOnMap(addressData){
-    console.log("addressData")
-    console.log(addressData)
+    // console.log("addressData")
+    // console.log(addressData)
     
     for(let i = 0; i < addressData.length; i++){
         var marker = new google.maps.Marker({
             position: addressData[i]["latLng"],	//marker的放置位置
             map: map, //這邊的map指的是第四行的map變數
             title: addressData[i]["title"],
-            icon: "../images/company.png"
+            icon: "../images/company.png",
+            // styles: [{ height: 20,
+            //             width: 20
+            //         }],
         });  
         markers.push(marker)
     }
@@ -62,8 +68,8 @@ function setMarkOnMap(addressData){
     console.log(markers)
     
     var markerCluster = new MarkerClusterer(map, markers,{
-        gridSize: 280,
-        maxZoom: 17,
+        gridSize: 180,
+        maxZoom: 16,
 //        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
         styles: [{
                     url: "../images/circle.png", // 可以自訂圖案
@@ -96,10 +102,16 @@ function getInitData(){
             createSingleHouse(thisSinglePost)
         }
         app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "");
-        app.get("#houseImg" + i).style.background = "url('" + getData[i]["houseImg"][0] + "')50% / cover no-repeat";
+
+        let postCover;
+        for(var key in getData[i]["houseImg"]){
+            postCover = key;
+            break;
+        }
+        app.get("#houseImg" + i).style.background = "url('" + getData[i]["houseImg"][postCover] + "')50% / cover no-repeat";
         app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "");
         app.createElement("div", "priceIcons" + i, "price_icons", "houseDetail" + i, "", "")
-        app.createElement("p", "price" + i, "price", "priceIcons" + i, getData[i]["price"], "");
+        app.createElement("p", "price" + i, "price", "priceIcons" + i, setThousandDigit(getData[i]["price"]), "");
         app.createElement("p", "", "", "houseDetail" + i, getData[i]["bedroom"] + "間房間, " + getData[i]["restroom"] + "間廁所, " + getData[i]["kindType"], "");
         app.createElement("p", "", "", "houseDetail" + i, getData[i]["section_name"], "");
     }
@@ -109,6 +121,7 @@ function getInitData(){
 
 /* create single house */
 let originalDot = 0;
+let singlePostImgArr = [];
 function createSingleHouse(thisPost){
     app.get("#rentalHouseContainer").style.display = "none";
     app.createElement("div", "rentalSingleHouse", "rental_single_house", "rentalRight", "", "");
@@ -127,9 +140,13 @@ function createSingleHouse(thisPost){
     /* single house img */
     app.createElement("div", "singleHouseImgContainer", "single_house_img_container", "rentalSingleHouse", "", "");
     app.createElement("div", "singleHouseImg", "single_house_img", "singleHouseImgContainer", "", "");
-    app.get("#singleHouseImg").style.background = "url('" + thisPost["houseImg"][0] + "')50% / cover no-repeat";
-    app.get("#singleHouseImg").setAttribute("data-img", 0)
+
     
+    for(var key in thisPost["houseImg"]){
+        singlePostImgArr.push(key);
+    }
+    app.get("#singleHouseImg").style.background = "url('" + thisPost["houseImg"][singlePostImgArr[0]] + "')50% / cover no-repeat";
+    app.get("#singleHouseImg").setAttribute("data-img", 0)
     /* single house slide */
     app.createElement("div", "SingleLeftContainer", "single_left_container", "singleHouseImg", "", app.rental.singlePostSlideLeft);
     app.createElement("div", "SingleLeft", "single_left", "SingleLeftContainer", "", "");
@@ -146,7 +163,7 @@ function createSingleHouse(thisPost){
     originalDot = 0;
     
     app.createElement("div", "singlePriceAddress", "single_price_address", "rentalSingleHouse", "", "");
-    app.createElement("p", "singlePrice", "single_price", "singlePriceAddress", thisPost["price"], "");
+    app.createElement("p", "singlePrice", "single_price", "singlePriceAddress", setThousandDigit(thisPost["price"]), "");
     app.createElement("div", "separateLine", "separate_line", "singlePriceAddress", "", "");
     app.createElement("div", "singleAddress", "single_address", "singlePriceAddress", "", "");
     app.createElement("p", "singleDist", "single_dist", "singleAddress", thisPost["regionName"] + thisPost["sectionName"], "");
@@ -200,8 +217,8 @@ app.rental.singlePostSlideLeft = (e) => {
     if(currentDot < 0){
         currentDot = 4;
     }
-    
-    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][currentDot] + "')50% / cover no-repeat";
+
+    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][singlePostImgArr[currentDot]] + "')50% / cover no-repeat";
     app.get("#singleHouseImg").setAttribute("data-img", currentDot)
     app.get("#dot" + currentDot).className = "dot active"
     app.get("#dot" + originalDot).classList.remove("active")
@@ -214,7 +231,7 @@ app.rental.singlePostSlideRight = (e) => {
     if(currentDot > 4){
         currentDot = 0;
     }
-    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][currentDot] + "')50% / cover no-repeat";
+    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][singlePostImgArr[currentDot]] + "')50% / cover no-repeat";
     app.get("#singleHouseImg").setAttribute("data-img", currentDot)
     app.get("#dot" + currentDot).className = "dot active"
     app.get("#dot" + originalDot).classList.remove("active")
@@ -224,7 +241,7 @@ app.rental.singlePostSlideRight = (e) => {
 app.rental.singlePostDotClick = (e) => {
     console.log(e.target)
     currentDot = e.target.getAttribute("data-order")
-    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][currentDot] + "')50% / cover no-repeat";
+    app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][singlePostImgArr[currentDot]] + "')50% / cover no-repeat";
     app.get("#singleHouseImg").setAttribute("data-img", currentDot)
     
     app.get("#dot" + currentDot).className = "dot active"
@@ -245,11 +262,18 @@ function createFilterResult(filterData){
             thisSinglePost = filterData[i];
             createSingleHouse(thisSinglePost)
         }
+
+        
         app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "")
-        app.get("#houseImg" + i).style.background = "url('" + filterData[i]["houseImg"][0] + "')50% / cover no-repeat"
+        let postCover;
+        for(var key in filterData[i]["houseImg"]){
+            postCover = key;
+            break;
+        }
+        app.get("#houseImg" + i).style.background = "url('" + filterData[i]["houseImg"][postCover] + "')50% / cover no-repeat"
         app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "")  
         app.createElement("div", "priceIcons" + i, "price_icons", "houseDetail" + i, "", "")
-        app.createElement("p", "price" + i, "price", "priceIcons" + i, filterData[i]["price"], "")
+        app.createElement("p", "price" + i, "price", "priceIcons" + i, setThousandDigit(filterData[i]["price"]), "")
         app.createElement("p", "", "", "houseDetail" + i, filterData[i]["bedroom"] + "間房間, " + filterData[i]["restroom"] + "間廁所, " + filterData[i]["kindType"], "")
         app.createElement("p", "", "", "houseDetail" + i, filterData[i]["section_name"], "")
     }
@@ -280,7 +304,6 @@ function createrRoomFilter(){
 let roomFilter = [];
 app.rental.roomFilter = (e) => {
     let roomAmount = e.target.innerHTML;
-//    filterResult = [];
     if(e.target.className === "room_amount"){
         e.target.classList.add('active')
         roomFilter.push(roomAmount);

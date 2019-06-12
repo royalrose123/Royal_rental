@@ -41,6 +41,8 @@ app.get("#uploadHouseImg").addEventListener("change", function(){
     readURL(this);
     var file = this.files[0];
     uploadImgs[currentImg] = file
+    console.log("this")
+    console.log(this)
 })
 
 /* support ID 10, Chrome 7 */
@@ -59,14 +61,18 @@ function readURL(input){
         lastImgNo = lastImg.getAttribute("data-no")
         currentImg = Number(lastImgNo) + 1;
     }
+    console.log("input")
+    console.log(input.files)
     houseImgArr.push(currentImg)
     uploadImgArr[currentImg] = input.files[0]; /* firebase img arr*/
-    console.log(uploadImgArr);
+    console.log("uploadImgArr");
     createImg(currentImg)
     if(input.files && input.files[0]){
         var reader = new FileReader();
         reader.onload = function (e){
             app.get("#houseImg" + currentImg).setAttribute('src', e.target.result);
+            console.log("e")
+            console.log(e)
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -117,12 +123,32 @@ let prevPostId;
 let thisPostId;
 let uploadTask;
 let houseImages = [] ;
-let getFirebaseURL = [];
+let getFirebaseURL = {};
 let count = 0;
+let kindTypeName;
+
 
 function houseSubmit(){
-
+    // var kindTypeName;
+    var kindType;
+    
     app.get("#houseSubmit").addEventListener("click", function(){
+
+        // let kindTypeName;
+        kindType = document.getElementsByName("kindType");
+        for(let i = 0; i < kindType.length; i++){
+            if(kindType[i].checked){
+                kindTypeName = kindType[i].value;
+            }
+        }
+
+        if(!kindTypeName){
+            app.get("#alertBoxLayout").style.display = "flex";
+            app.get("#alertIndex").innerHTML = "請選擇類型";
+            return
+        }
+
+
         let address = regionName.value + sectionName.value + streetName.value;
         addressToLatLng(address)
         
@@ -138,7 +164,7 @@ function houseSubmit(){
             houseImages.push(thisImgUrl);
             
             let storageRef = storage.ref();
-            let uploadImg = storageRef.child("images/house" + thisPostId + "_" + i).put(uploadImgArr[img]);
+            let uploadImg = storageRef.child("images/" + "house" + thisPostId + "/house" + thisPostId + "_" + img).put(uploadImgArr[img]);
 
         //     Listen for state changes, errors, and completion of the upload.
             uploadImg.on("state_changed",function(snapshot) {
@@ -173,13 +199,18 @@ function houseSubmit(){
                         break;
                 }
             }, function() {
-                let pathReference = storageRef.child("images/house" + thisPostId + "_" + i);
+                let pathReference = storageRef.child("images/" + "house" + thisPostId + "/house" + thisPostId + "_" + img);
                 pathReference.getDownloadURL().then(function(url) {
-                    getFirebaseURL.push(url);
+                    // getFirebaseURL.push(url);
+                    getFirebaseURL["house" + thisPostId + "_" + img] = url
                     count++;
                     if(count === houseImgArr.length){
                         addressData = JSON.parse(localStorage.getItem("address"));
                         setHouseData();
+                        setTimeout(
+                            function(){
+                                window.location = "member.html"
+                            },3000);
                     }
                 })
             })
@@ -188,7 +219,7 @@ function houseSubmit(){
             app.get("#alertIndex").innerHTML = "上傳中，請稍等。";
         })
     }) 
-//        setTimeout(function(){window.location = "rental.html";},3000);
+//        
 }
 
 function setHouseData(){
@@ -196,18 +227,10 @@ function setHouseData(){
 //    console.log(thisPostId);
     console.log("houseImages")
     console.log(houseImages)
-    let kindTypeName;
-    let kindType = document.getElementsByName("kindType");
-    for(let i = 0; i < kindType.length; i++){
-        if(kindType[i].checked){
-            kindTypeName = kindType[i].value;
-        }
-    }
-    if(!kindTypeName){
-        app.get("#alertBoxLayout").style.display = "flex";
-        app.get("#alertIndex").innerHTML = "請選擇類型";
-        return
-    }
+    // let kindTypeName;
+    // let kindType = document.getElementsByName("kindType");
+    
+    
         
     let deviceObj = {};
     let device = document.getElementsByName("deviceCheck");
@@ -272,9 +295,9 @@ function setHouseData(){
     let preUserPost = getUser["userPost"];
     if(!preUserPost){
         preUserPost = [];
-        preUserPost.push(thisPostId);
+        preUserPost.push(thisPostId.toString());
     }else{
-        preUserPost.push(thisPostId);
+        preUserPost.push(thisPostId.toString());
     }
 
     database.ref("member/" + thisUserId).update({
@@ -284,6 +307,7 @@ function setHouseData(){
     app.get("#alertIndex").innerHTML = "刊登成功";
     app.get("#alertBtn").style.display = "block";
     app.get("#alertBtn").onclick = function(){
-        window.location = "rental.html";
+        window.location = "member.html";
     }
+    // setTimeout(window.location = "member.html",3000);
 }

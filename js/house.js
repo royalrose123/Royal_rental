@@ -34,6 +34,7 @@ function createHouseLeft(){
     createHouseData()
 }
 
+let thisDataImgArr = [];
 function createSelectorImg(){
     app.createElement("div", "displayHouseImg", "display_house_img", "houseImgContainer", "", "");
     app.get("#displayHouseImg").setAttribute("data-img",0);
@@ -42,9 +43,15 @@ function createSelectorImg(){
     app.createElement("div", "slideRightContainer", "slide_right_container", "displayHouseImg", "", slideRight);
     app.createElement("div", "slideRight", "slide_right", "slideRightContainer", "", "");
     app.createElement("div", "houseImgSelectorContainer", "house_img_selector_container", "houseImgContainer", "", "");
+
+    for(var key in thisData[0]["houseImg"]){
+        thisDataImgArr.push(key);
+    }
+    console.log("thisDataImgArr")
+    console.log(thisDataImgArr)
     for(i = 0; i < 5; i++){
         app.createElement("div", "houseImgSelector" + i, "house_img_selector", "houseImgSelectorContainer","", showThisImg);
-        app.get("#houseImgSelector" + i).style.background = "url('" + thisData[0]["houseImg"][i] + "') 50% / cover no-repeat";
+        app.get("#houseImgSelector" + i).style.background = "url('" + thisData[0]["houseImg"][thisDataImgArr[i]] + "') 50% / cover no-repeat";
         app.get("#houseImgSelector" + i).setAttribute("data-no",i);
     }
     let thisImg = app.get("#displayHouseImg").getAttribute("data-img");
@@ -146,7 +153,7 @@ function createHouseRight(){
 
 function createHouseInfo(){
    /* house info price  */ app.createElement("div","housePriceContainer","house_price_container","houseInfoContainer","","");
-    app.createElement("span","housePrice","house_price","housePriceContainer",thisData[0]["price"],"");
+    app.createElement("span","housePrice","house_price","housePriceContainer",setThousandDigit(thisData[0]["price"]),"");
     app.createElement("span","","","housePriceContainer","元/月","");
     
     let priceInclude = "含";
@@ -181,5 +188,5 @@ function createOwnerInfo(){
     app.createElement("div","ownerPhoneContainer","owner_phone_container","ownerContainer","","");
      app.createElement("div","ownerPhoneImg","owner_phone_img","ownerPhoneContainer","","");
     
-    app.createElement("p","ownerPhone","owner_phone","ownerPhoneContainer",getUser["phone"],"");
+    app.createElement("p","ownerPhone","owner_phone","ownerPhoneContainer",setPhoneSeparate(getUser["phone"]),"");
 }
