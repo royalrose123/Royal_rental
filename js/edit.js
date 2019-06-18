@@ -18,6 +18,7 @@ function getThisArticle(){
     }
     console.log("thisData")
     console.log(thisData)
+    app.get("#houseTitle").innerHTML = "(" + thisData[0]["title"] + ")";
     setPostUserName()
 }
 
@@ -363,3 +364,12 @@ function updateHouseData(){
         },3000);
 }
 
+
+app.get("#houseEditCancel").addEventListener("click", function(){
+    app.get("#alertBoxLayout").style.display = "flex";
+    app.get("#alertIndex").innerHTML = "取消修改";
+    app.get("#alertBtn").style.display = "block";
+    app.get("#alertBtn").onclick = function(){
+        location.href= "member.html"
+    }
+})

@@ -206,7 +206,10 @@
 }
 
 .rental .rental_right .result_house .house_card .house_detail .price_icons{
-    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .rental .rental_right .result_house .house_card .house_detail .price_icons .price{
@@ -215,6 +218,37 @@
     color: white;
     text-shadow: 1px 1px 10px black;
     letter-spacing: 1px;
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons .icons{
+    filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.4));
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons .icons .fav_heart{
+    width: 36px;
+    height: 36px;
+    background: url("../images/fav_heart.svg");
+    background-size: cover;
+    background-position: center;    
+    margin: 8px;
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons .icons .fav_heart:hover{
+    background: url("../images/fav_heart_hover.svg");
+    width: 36px;
+    height: 36px;
+    background-size: cover;
+    background-position: center;    
+    margin: 8px;
+}
+
+.rental .rental_right .result_house .house_card .house_detail .price_icons .icons .fav_heart.active{
+    width: 36px;
+    height: 36px;
+    background: url("../images/fav_filled_heart.svg");
+    background-size: cover;
+    background-position: center;    
+    margin: 8px;
 }
 
 .rental .rental_right .result_house .house_detail > p{
@@ -256,16 +290,30 @@
     border: 1px solid #00A99D;
     color: #002A27;
     border-radius: 3px;
-    padding: 0px 10px;
+    padding: 6px 12px 6px 16px;
     margin-right: 5px;
     cursor: pointer;
 }
 
+.rental .rental_right .rental_single_house .btn_container .fav_btn:hover{
+    background-color: #60C9C2;
+    color: white;
+    border: 1px solid black;
+}
+
 .rental .rental_right .rental_single_house .btn_container .fav_btn .fav_img{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     margin-left: -8px;
-    background: url(../images/nav_heart.png);
+    background: url(../images/black_border_heart.svg);
+    background-size: cover;
+}
+
+.rental .rental_right .rental_single_house .btn_container .fav_btn.active .fav_img{
+    width: 20px;
+    height: 20px;
+    margin-left: -8px;
+    background: url(../images/fav_filled_heart.svg);
     background-size: cover;
 }
 
@@ -446,7 +494,7 @@
 }
 
 .rental .rental_right .rental_single_house .single_house_more{
-    width: 100%;
+/*    width: 100%;*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -467,29 +515,88 @@
 
 @media(max-width: 991px){
     .rental .rental_left{
-/*        width: calc(100% - 400px);*/
         display: none;
     }
     
     .rental .rental_right{
+        width: 600px;
+        padding: 0px;
+    }
+    
+    .rental .rental_right .rental_filter{
+        background-color: white;
         width: 100%;
-        padding: 0;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+
+    .rental .rental_right .rental_filter .filter_type .filter_title{
+        width: 18%;
+        margin: 8px;
+    }
+
+    .rental .rental_right .result_title{
+        margin: 16px;
+        letter-spacing: 1px;
     }
     
     .rental .rental_right .result_house .house_card{
-        height: 200px;
+        height: 160px;
         border-radius: 0px;
         margin: 0;
+        display: flex;
     }
     
     .rental .rental_right .result_house .house_card .house_img{
-/*        padding-bottom: 0;*/
-        width: 300px;
+        padding-bottom: 0;
+        width: 240px;
+         padding-bottom: 0%;
     }
     
-    /* rental single house */
+    .rental .rental_right .result_house .house_card .house_detail{
+        bottom: 0px;
+        margin: 0px 6px;
+    }
+    
+    .rental .rental_right .result_house .house_card .house_detail .price_icons{
+        width: 320px;
+    }
+
+    .rental .rental_right .result_house .house_card .house_detail .price_icons .price{
+        font-size: 1.6em;
+        color: black;
+        text-shadow: none;
+    }
+    
+    /* rental single house css */
     .rental .rental_right .rental_single_house{
-        padding: 16px;
+        width: 100%;
+    }
+
+    .rental .rental_right .rental_single_house .btn_container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin: 16px 8px;
+    }
+
+    .rental .rental_right .rental_single_house .btn_container .fav_btn{
+        padding: 4px 12px 4px 16px;
+        margin-right: 0px;
+    }
+
+    /* single house img css*/
+    .rental .rental_right .rental_single_house .single_house_img_container{
+        padding: 0px -8px;
+        margin: 0;
     }
     
+    .rental .rental_right .rental_single_house > div{
+        margin: 0 8px;
+    }
+
+    .rental .rental_right .rental_single_house .single_price_address .single_price{
+        font-size: 2em;
+    }
 }

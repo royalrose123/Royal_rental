@@ -193,7 +193,7 @@
     border: 1px solid #bbbbbb;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.9s;
+    transition: all 0.3s;
 }
 
 .member .member_display .member_fav_house .fav_house:hover{
@@ -212,10 +212,33 @@
     bottom: 40px;
 }
 
-.member .member_display .member_fav_house .fav_house .fav_house_detail .price{
+.member .member_display .member_fav_house .fav_house .fav_house_detail .fav_price_icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    margin: 0px 8px;
+}
+
+.member .member_display .member_fav_house .fav_house .fav_house_detail .fav_price_icons .price{
     color: white;
     font-size: 24px;
     text-shadow: 1px 1px 10px black;
+}
+
+.member .member_display .member_fav_house .fav_house .fav_house_detail .fav_price_icons .icons{
+    filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.4));
+}   
+
+.member .member_display .member_fav_house .fav_house .fav_house_detail .fav_price_icons .icons .fav_heart{
+    width: 28px;
+    height: 28px;
+    background: url("../images/fav_filled_heart.svg");
+    background-size: cover;
+    background-position: center;    
+    margin: 6px 12px 2px 12px;
 }
 
 .member .member_display .member_fav_house .fav_house .fav_house_detail > p {

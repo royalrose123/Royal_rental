@@ -13,7 +13,7 @@ body{
     height: 60px;
     box-shadow: 0.5px 0.5px 5px #D0D3D4;
     position: fixed;
-    z-index: 1;
+    z-index: 300;
     background-color: white;
 }
 
@@ -216,7 +216,7 @@ body{
 
 /* login layout css */
 .log_layout_container{
-    width: 100%;
+    width: 100%;    
     height: 100%;
     background-color: rgba(192, 192, 192, 0.3);
     position: fixed;
@@ -225,7 +225,7 @@ body{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    z-index: 1000 ;
+    z-index: 301;
     top: 0;
 }
 
@@ -309,6 +309,58 @@ body{
     line-height: 38px;
     font-size: 16px;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* alert box css */
+
+.alert_box_layout{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    z-index: 302;
+    top:0;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert_box_layout .alert_box{
+    width: 300px;
+    height: 180px;
+    background-color: white;
+    z-index: 10;
+    border-radius: 6px;
+    letter-spacing: 3px;
+}
+
+.alert_box_layout .alert_box .alert_title{
+    font-size: 24px;
+    color: rgb(128, 128, 128);
+    text-align: center;
+}
+
+.alert_box_layout .alert_box .alert_index{
+    font-size: 15px;
+    color: rgb(128, 128, 128);
+    text-align: center;
+}
+
+.alert_box_layout .alert_box .alert_btn{
+    color: white;
+    width: 30%;
+    background-color: rgb(26, 216, 211);
+    text-align: center;
+    margin: 0 auto;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.alert_box_layout .alert_box .alert_btn:hover{
     cursor: pointer;
 }
 

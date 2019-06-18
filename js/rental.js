@@ -1,12 +1,12 @@
 var map;
-function initMap() {
-    map = new google.maps.Map(app.get('#map'), {
+function initAutocomplete() {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 25.0244465, lng:121.5459541},
         zoom: 14,
-        
+        mapTypeId: 'roadmap'
     });
-    
-    /* get current location */
+
+        /* get current location */
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log(position)
@@ -18,135 +18,288 @@ function initMap() {
             map.setCenter(pos);
         });
     }
+
+    // Create the search box and link it to the UI element.
+    var input = app.get("#navSearch")
+    var searchBox = new google.maps.places.SearchBox(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(30, 30),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 30),
+          scaledSize: new google.maps.Size(10, 10)
+        };
+
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  }
+
+var getMember;
+let userFavPost;
+let firebaseMember = database.ref("member");
+firebaseMember.on("value", function(snapshot){
+    if(checkUser){
+        getMember = snapshot.val();
+        getMember = getMember[checkUser.uid]
+        userFavPost = getMember["favPost"];
+        if(!userFavPost) userFavPost = [];
+    }else{
+        userFavPost = [];
+    }
     
-//    var mapOptions = {
-//        zoom: 4,
-//        minZoom: 3,
-//        maxZoom: 12,
-//    };
-    
+})  
+
+function isPointInRange(point){
+    let SWLat = map.getBounds().getSouthWest().lat();
+    let SWLng = map.getBounds().getSouthWest().lng();
+    let NELat = map.getBounds().getNorthEast().lat();
+    let NELng = map.getBounds().getNorthEast().lng();
+    if(point){
+        if(point.lat >= SWLat && point.lat <= NELat && point.lng >= SWLng && point.lng <= NELng){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 
-
 /* firebase house data */
-var getData;
-
-var firebaseData = database.ref("house")
+var getNewData;
+var getData
+var firebaseData = database.ref("house");
 firebaseData.on("value", function(snapshot){
     getData = snapshot.val();
-    console.log("before getData");
-    console.log(getData)
-    getData = getData.filter(test => test)
-    console.log("after getData");
-    console.log(getData)
-    getInitData();
-    setMarkOnMap(getData);
+    map.addListener('bounds_changed', function() {
+        if(getData){
+            getNewData = getData.filter(data => isPointInRange(data.latLng))
+            getPriceFilterData()
+            if(!allFilterResult){
+                createPostData(getNewData)
+            }else{
+                getFilterData()
+                createPostData(allFilterResult)
+            }
+        }
+      });
+      
+    
+    if(!getNewData) {
+        createPostData(getData)
+    }
     createrRoomFilter();
     createKindTypeFilter();
 })
 
 var marker;
 var markers = [];
+var markerCluster;
 function setMarkOnMap(addressData){
-    // console.log("addressData")
-    // console.log(addressData)
-    
+
+    /* remove old markers */
+    if(markers.length > 0){
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    }
+
     for(let i = 0; i < addressData.length; i++){
         var marker = new google.maps.Marker({
             position: addressData[i]["latLng"],	//marker的放置位置
             map: map, //這邊的map指的是第四行的map變數
             title: addressData[i]["title"],
             icon: "../images/company.png",
-            // styles: [{ height: 20,
-            //             width: 20
-            //         }],
         });  
         markers.push(marker)
+        marker.addListener("click",function(){
+            let thisSinglePage = app.get("#rentalSingleHouse");
+            thisSinglePost = addressData[i];
+            if(thisSinglePage){
+                thisSinglePage.parentNode.removeChild(thisSinglePage);
+            }
+            createSingleHouse(thisSinglePost);
+        })
+    }
+
+    /* remove old cluster */
+    if(markerCluster){
+        markerCluster.clearMarkers();
     }
     
-    console.log("markers")
-    console.log(markers)
-    
-    var markerCluster = new MarkerClusterer(map, markers,{
+    markerCluster = new MarkerClusterer(map, markers,{
         gridSize: 180,
         maxZoom: 16,
+        
 //        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
         styles: [{
-                    url: "../images/circle.png", // 可以自訂圖案
-                    height: 40,
-                    width: 40,
-                    anchor: [0, 0],    // 文字出現在標記上的哪個位置 (position on marker)
-                    textColor: 'red',
-                    textSize: 16,
-//                    zIndex: 9000,
-                    textAlign: "center",
-                    backgroundPosition: "center",
-//                    borderRadius: "50%",
-                    backgroundSize: "center",
-                    backgroundRepeat: "no-repeat"
-                    
-                }],
-              
-        });    
+            url: "../images/circle.png", // 可以自訂圖案
+            height: 40,
+            width: 40,
+            anchor: [0, 0],    // 文字出現在標記上的哪個位置 (position on marker)
+            textColor: 'red',
+            textSize: 16,
+            textAlign: "center",
+            backgroundPosition: "center",
+            backgroundSize: "center",
+            backgroundRepeat: "no-repeat"
+        }],
+    });    
 }
 
 let thisSinglePost;
-function getInitData(){
+function createPostData(data){
+    let resultHouse = app.get("#resultHouse");
+    if(resultHouse){
+        resultHouse.parentNode.removeChild(resultHouse);
+    }
     app.createElement("div", "resultHouse", "result_house", "rentalHouseContainer", "", "");
-    for(let i = 0; i < getData.length; i++){
+    for(let i = 0; i < data.length; i++){
         app.createElement("div", "houseCard" + i, "house_card", "resultHouse", "", "");
-        app.get("#houseCard" + i).onclick = function(){
-            thisSinglePost = getData[i];
-            console.log(thisSinglePost)
-//                location.href= "house.html?id=" + getData[i]["postId"];
+        app.get("#houseCard" + i).onclick = (e) =>{
+            thisSinglePost = data[i];
             createSingleHouse(thisSinglePost)
         }
         app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "");
 
         let postCover;
-        for(var key in getData[i]["houseImg"]){
+        for(var key in data[i]["houseImg"]){
             postCover = key;
             break;
         }
-        app.get("#houseImg" + i).style.background = "url('" + getData[i]["houseImg"][postCover] + "')50% / cover no-repeat";
+        let currentPostId = data[i]["postId"].toString();
+        app.get("#houseImg" + i).style.background = "url('" + data[i]["houseImg"][postCover] + "')50% / cover no-repeat";
         app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "");
         app.createElement("div", "priceIcons" + i, "price_icons", "houseDetail" + i, "", "")
-        app.createElement("p", "price" + i, "price", "priceIcons" + i, setThousandDigit(getData[i]["price"]), "");
-        app.createElement("p", "", "", "houseDetail" + i, getData[i]["bedroom"] + "間房間, " + getData[i]["restroom"] + "間廁所, " + getData[i]["kindType"], "");
-        app.createElement("p", "", "", "houseDetail" + i, getData[i]["section_name"], "");
+        app.createElement("p", "price" + i, "price", "priceIcons" + i, setThousandDigit(data[i]["price"]), "");
+        if(checkUser){
+            app.createElement("div", "icons" + i, "icons", "priceIcons" + i, "", "");
+            app.createElement("div", "favHeart" + currentPostId, "fav_heart", "icons" + i, "", app.rental.favHouseClick);
+            app.get("#favHeart" + currentPostId).setAttribute("data-post", data[i]["postId"]);
+            if(userFavPost.indexOf(currentPostId) !== -1){
+                app.get("#favHeart" + currentPostId).className = "fav_heart active"
+            }
+        }
+        
+        app.createElement("p", "", "", "houseDetail" + i, data[i]["bedroom"] + "間房間, " + data[i]["restroom"] + "間廁所, " + data[i]["kindType"], "");
+        app.createElement("p", "", "", "houseDetail" + i, data[i]["section_name"], "");
     }
-    app.get("#resultTitle").innerHTML = getData.length + "筆結果";
+    app.get("#resultTitle").innerHTML = data.length + "筆結果";
+    
+    setMarkOnMap(data);
 }
 
+app.rental.favHouseClick = (e) => {
+    let thisPostId = e.target.getAttribute("data-post")
+    let heartClass = e.target.className;
+    
+    if(heartClass === "fav_heart"){
+        e.target.className = "fav_heart active"
+        userFavPost.push(thisPostId);
+        database.ref("member/" + checkUser.uid).update({
+            favPost: userFavPost
+         })
+    }else{
+        e.target.className = "fav_heart"
+        let index = userFavPost.indexOf(thisPostId)
+        userFavPost.splice(index, 1)
+        database.ref("member/" + checkUser.uid).update({
+            favPost: userFavPost,
+         })
+    }
+    e.stopPropagation();
+}
 
 /* create single house */
 let originalDot = 0;
-let singlePostImgArr = [];
+let singlePostImgArr;
 function createSingleHouse(thisPost){
     app.get("#rentalHouseContainer").style.display = "none";
+    let resultHouse = app.get("#resultHouse") 
+    if(resultHouse){
+        resultHouse.parentNode.removeChild(resultHouse)
+    }
+    
     app.createElement("div", "rentalSingleHouse", "rental_single_house", "rentalRight", "", "");
     app.createElement("div", "btnContainer", "btn_container", "rentalSingleHouse", "", "");
     app.createElement("div", "backBtn", "back_btn", "btnContainer", "", "");
     app.createElement("div", "", "", "backBtn", "返回搜尋結果", "");
     app.get("#backBtn").onclick = function(){
         app.get("#rentalHouseContainer").style.display = "block";
-        let thisSinglePage = app.get("#rentalSingleHouse");
-        thisSinglePage.parentNode.removeChild(thisSinglePage);
+        let rentalSingleHouse = app.get("#rentalSingleHouse");
+        rentalSingleHouse.parentNode.removeChild(rentalSingleHouse);
+        if(!getNewData){
+            createPostData(getData)
+        }else{
+            if(!allFilterResult){
+                createPostData(getNewData)
+            }else{
+                createPostData(allFilterResult)
+            }
+        }
     }
-    app.createElement("div", "favBtn", "fav_btn", "btnContainer", "", "");
-    app.createElement("div", "favImg", "fav_img", "favBtn", "", "");
-    app.createElement("div", "", "", "favBtn", "收藏", "");
+    if(checkUser){
+        app.createElement("div", "favBtn", "fav_btn", "btnContainer", "", app.rental.singlePostFav);
+        app.get("#favBtn").setAttribute("data-fav",thisPost["postId"])
+        app.createElement("div", "favImg", "fav_img", "favBtn", "", "");
+        app.createElement("div", "", "", "favBtn", "收藏", "");
+        if(userFavPost.indexOf(thisPost["postId"].toString()) !== -1){
+            app.get("#favBtn").className = "fav_btn active"
+        }
+    }
     
     /* single house img */
     app.createElement("div", "singleHouseImgContainer", "single_house_img_container", "rentalSingleHouse", "", "");
     app.createElement("div", "singleHouseImg", "single_house_img", "singleHouseImgContainer", "", "");
 
-    
+    singlePostImgArr = [];
     for(var key in thisPost["houseImg"]){
         singlePostImgArr.push(key);
     }
     app.get("#singleHouseImg").style.background = "url('" + thisPost["houseImg"][singlePostImgArr[0]] + "')50% / cover no-repeat";
     app.get("#singleHouseImg").setAttribute("data-img", 0)
+
     /* single house slide */
     app.createElement("div", "SingleLeftContainer", "single_left_container", "singleHouseImg", "", app.rental.singlePostSlideLeft);
     app.createElement("div", "SingleLeft", "single_left", "SingleLeftContainer", "", "");
@@ -168,13 +321,10 @@ function createSingleHouse(thisPost){
     app.createElement("div", "singleAddress", "single_address", "singlePriceAddress", "", "");
     app.createElement("p", "singleDist", "single_dist", "singleAddress", thisPost["regionName"] + thisPost["sectionName"], "");
     app.createElement("p", "singleStreet", "single_street", "singleAddress", thisPost["address"], "");
-    
     app.createElement("div", "", "single_house_title", "rentalSingleHouse", "屋況說明", "");
     app.createElement("div", "singleDetail", "single_house_content", "rentalSingleHouse", thisPost["houseDetail"], "");
-    
     app.createElement("div", "", "single_house_title", "rentalSingleHouse", "生活周遭", "");
     app.createElement("div", "singleSurrounding", "single_house_content", "rentalSingleHouse", thisPost["houseSurrounding"], "");
-    
     app.createElement("div", "", "single_house_title", "rentalSingleHouse", "房屋設備", "");
     app.createElement("div", "singleDeviceContainer", "single_device_container", "rentalSingleHouse", "", "");
     
@@ -208,6 +358,25 @@ function createSingleHouse(thisPost){
     }
 }
 
+/* single post fav btn */
+app.rental.singlePostFav = (e) => {
+    let favBtn = app.get("#favBtn");
+    let favPostId = app.get("#favBtn").getAttribute("data-fav")
+    if(favBtn.className === "fav_btn"){
+        favBtn.className = "fav_btn active"
+        userFavPost.push(favPostId)
+        database.ref("member/" + checkUser.uid).update({
+            favPost: userFavPost,
+         })
+    }else{
+        favBtn.classList.remove("active")
+        let index = userFavPost.indexOf(favPostId)
+        userFavPost.splice(index, 1)
+        database.ref("member/" + checkUser.uid).update({
+            favPost: userFavPost,
+         })
+    }
+}
 
 /* single post img slide */
 let currentDot;
@@ -239,7 +408,6 @@ app.rental.singlePostSlideRight = (e) => {
 }
 
 app.rental.singlePostDotClick = (e) => {
-    console.log(e.target)
     currentDot = e.target.getAttribute("data-order")
     app.get("#singleHouseImg").style.background = "url('" + thisSinglePost["houseImg"][singlePostImgArr[currentDot]] + "')50% / cover no-repeat";
     app.get("#singleHouseImg").setAttribute("data-img", currentDot)
@@ -249,46 +417,20 @@ app.rental.singlePostDotClick = (e) => {
     originalDot = currentDot;
 }
 
-function removeResult(){
-    let resultHouse = app.get("#resultHouse");
-    resultHouse.parentNode.removeChild(resultHouse)
-}
-
-function createFilterResult(filterData){
-    app.createElement("div", "resultHouse", "result_house", "rentalHouseContainer", "", "")
-    for(let i = 0; i < filterData.length; i++){
-        app.createElement("div", "houseCard" + i, "house_card", "resultHouse", "", "")
-        app.get("#houseCard" + i).onclick = function(){
-            thisSinglePost = filterData[i];
-            createSingleHouse(thisSinglePost)
-        }
-
-        
-        app.createElement("div", "houseImg" + i, "house_img", "houseCard" + i, "", "")
-        let postCover;
-        for(var key in filterData[i]["houseImg"]){
-            postCover = key;
-            break;
-        }
-        app.get("#houseImg" + i).style.background = "url('" + filterData[i]["houseImg"][postCover] + "')50% / cover no-repeat"
-        app.createElement("div", "houseDetail" + i, "house_detail", "houseCard" + i, "", "")  
-        app.createElement("div", "priceIcons" + i, "price_icons", "houseDetail" + i, "", "")
-        app.createElement("p", "price" + i, "price", "priceIcons" + i, setThousandDigit(filterData[i]["price"]), "")
-        app.createElement("p", "", "", "houseDetail" + i, filterData[i]["bedroom"] + "間房間, " + filterData[i]["restroom"] + "間廁所, " + filterData[i]["kindType"], "")
-        app.createElement("p", "", "", "houseDetail" + i, filterData[i]["section_name"], "")
-    }
-    app.get("#resultTitle").innerHTML = filterData.length + "筆結果";
-}
-
 /* price filter */
 let priceFilterData;
 function getPriceFilterData(){
     let leftPrice = Number(moneyLeft.textContent);
     let rightPrice = Number(moneyRight.textContent);
-    priceFilterData = []
-    firebaseData.orderByChild("price").startAt(leftPrice).endAt(rightPrice).on("child_added", function(snapshot) {
-        priceFilterData.push(snapshot.val());
-    })
+    if(getNewData){
+        priceFilterData = getNewData.filter(function(item, index, array){
+            return item.price >= leftPrice && item.price <= rightPrice;
+          });
+    }else{
+        priceFilterData = getData.filter(function(item, index, array){
+            return item.price >= leftPrice && item.price <= rightPrice;
+          });
+    }
 }
 
 /* room amount filter */
@@ -314,7 +456,6 @@ app.rental.roomFilter = (e) => {
             return value !== roomAmount;
         });
     }
-    removeResult()
     getPriceFilterData()
     getFilterData()
 }
@@ -343,11 +484,11 @@ app.rental.kindTypeFilter = (e) => {
             return value !== kindType;
         });
     }
-    removeResult()
     getPriceFilterData()
     getFilterData()
 }
 
+let allFilterResult;
 function getFilterData(){
     let allFilter = {
         bedroom: roomFilter,
@@ -366,18 +507,17 @@ function getFilterData(){
             })
         })
     }
-    let allFilterResult = multiFilter(priceFilterData, allFilter);
+    allFilterResult = multiFilter(priceFilterData, allFilter);
     
     /* delete repeat data */
     let set = new Set();
     allFilterResult = allFilterResult.filter(item => !set.has(item.postId) ? set.add(item.postId) : false);
     
-    createFilterResult(allFilterResult);
+    createPostData(allFilterResult);
     let filterArr = Object.keys(allFilter);
     function isEmptyObject(obj, arr) {
         for(i = 0; i < arr.length; i++){
             if(obj[arr[i]].length){
-                
                 return false;
             }
         }
@@ -385,11 +525,12 @@ function getFilterData(){
     }
     
     if(isEmptyObject(allFilter, filterArr)){
-        removeResult();
         getPriceFilterData();
-        createFilterResult(priceFilterData);
+        createPostData(priceFilterData);
         app.get("#resultTitle").innerHTML = priceFilterData.length + "筆結果";
     }
+
+    
 }
 
 /* price filter */
@@ -448,13 +589,11 @@ function dragStart(e) {
 function dragEnd(e) {
     if(e.target.id === "circleLeft"){
         active = false;
-        removeResult()
         getPriceFilterData();
         getFilterData()
     }
     if(e.target.id === "circleRight"){
         active = false;
-        removeResult()
         getPriceFilterData();
         getFilterData()
     }

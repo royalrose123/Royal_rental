@@ -10,7 +10,6 @@ firebase.auth().onAuthStateChanged(function(user){
         app.get("#loginBtn").style.display = "block";
         app.get("#memberBtn").style.display = "none";
     }
-    
 })
 
 /* create nav */
@@ -18,8 +17,9 @@ createNav()
 function createNav(){
     app.createElement("div", "navLeft", "nav_left", "nav", "", "");
     app.createElement("div", "navLogo", "nav_logo", "navLeft", "", "");
-    app.createElement("p", "navTitle", "nav_title", "navLeft", "Royal Rental", "");
+    app.createElement("p", "navTitle", "nav_title", "navLeft", "Live Life", "");
     app.createElement("input", "navSearch", "nav_search", "navLeft", "", "");
+    // app.get("#navSearch").setAttribute("autocomplete","off")
     app.get("#navSearch").setAttribute("placeholder","請問想住哪呢?")
     app.createElement("div", "navRight", "nav_right", "nav", "", "");
     app.createElement("ul", "navList", "nav_list", "navRight", "", "");

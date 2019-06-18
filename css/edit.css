@@ -8,21 +8,30 @@
     margin: 0;
     
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.backstage_poster >p{
-    width: 160px;
+.backstage_poster > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     font-size: 24px;
     color: white;
     background-color: rgba(128,128,128,0.7);
-    padding: 6px;
+    padding: 8px 4px;
     padding-left: 13px;
     border-radius: 5px;
     letter-spacing: 10px;
     text-align: center;
+   
+}
+
+.backstage_poster > div > p{
+    margin: 0;
 }
 
 /* backstage css */
