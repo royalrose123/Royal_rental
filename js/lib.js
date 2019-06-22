@@ -4,6 +4,7 @@ let app = {
     member: {},
     rental: {},
     edit: {},
+    common:{},
 }
 
 app.get = function( selector ){

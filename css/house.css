@@ -278,7 +278,7 @@
 
 .house .house_left .house_ask_container .house_ask_btn{
     font-size: 16px;
-    background-color: #FF641C;
+    background-color: #B87333;
     width: 70px;
     text-align: center;
     padding: 8px 8px;
@@ -314,7 +314,7 @@
 
 .house .house_right .house_info_container .house_price_container{
     width: inherit;
-    color: #FF4214;
+    color: #B87333;
 }
 
 
@@ -384,7 +384,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #FF641C;
+    background-color: #B87333;
 }
 
 .house .house_right .owner_info_container .owner_phone_container .owner_phone_img{

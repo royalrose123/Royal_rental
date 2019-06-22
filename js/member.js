@@ -1,5 +1,5 @@
-var getUser;
-var thisUser;
+let getUser;
+let thisUser;
 var thisUserId;
 var userPostIdArr;
 var userFavArr;
@@ -21,7 +21,6 @@ firebase.auth().onAuthStateChanged(function(user){
         app.get("#favHouseBtn").addEventListener("click",memberBarClick);
         app.get("#myHouseBtn").addEventListener("click",memberBarClick);
         getFirebaseUser();
-        
 
         userFavPost = getUser["favPost"];
         if(!userFavPost) userFavPost = [];
@@ -55,6 +54,7 @@ function getFirebaseUser(){
 app.get("#logOut").onclick = function(){
     userLogout();
 }
+
 function userLogout(){
     app.get("#memberBtn").style.display = "none";
     app.get("#loginBtn").style.display = "block";
@@ -89,7 +89,6 @@ function createMemberDisplay(){
     createMemberPost();
     app.member.memberLayoutDisplay("#memberData","#memberFavHouse","#memberPost");
 }
-
 
 /* create member data */
 function createMemberData(){
@@ -192,6 +191,7 @@ app.member.memberDataConfirm = function(){
     if(!gender){
         app.get("#alertBoxLayout").style.display = "flex";
         app.get("#alertIndex").innerHTML = "請選擇性別";
+        app.get("#alertBtnContainer").style.display = "none";
         return
     }else if(!memberName.value){
             app.get("#alertBoxLayout").style.display = "flex";
@@ -305,18 +305,12 @@ app.member.favHouseClick = (e) => {
 function createMemberPost(){
     userPostIdArr = getUser["userPost"];
     app.createElement("div","memberPost","member_post","memberDisplay","","");
-    
     if(!userPostIdArr){
         app.createElement("p","","","memberPost","目前沒有刊登","");
     }else{
-        
         for(let i = 0; i < userPostIdArr.length; i++){
-
-            // console.log("userPostIdArr")
-            // console.log(userPostIdArr[i].length)
             if(userPostIdArr[i]){
                     let postId = userPostIdArr[i]
-                    console.log("postId = " + postId)
                     app.createElement("div","postConatiner" + postId,"post_container","memberPost","","");
                     
                     app.createElement("div","post" + postId,"post","postConatiner" + postId,"","");
@@ -347,7 +341,6 @@ function createMemberPost(){
 app.member.postModify = (e) =>{
     let thisPostId = e.target.getAttribute("data-postId");
     location.href= "edit.html?id=" + thisPostId;
-    console.log(thisPostId)
 }
 
 let thisPostId;
@@ -367,38 +360,34 @@ app.member.postDelete = (e) =>{
     app.get("#alertBtn").style.display = "none"
     app.get("#alertBtnCancel").addEventListener("click",function(){
         app.get("#alertBoxLayout").style.display = "none";
+        thisPostImgArr = []
     })
 }
 
 app.member.postDeleteConfirm = () =>{
-    console.log("thisPostImgArr")
-    console.log(thisPostImgArr)
-    console.log("img")
-    console.log(getAllData[thisPostId]["houseImg"])
-    
-
+    userPostIdArr = userPostIdArr.filter(function(element, index, arr){
+        return arr.indexOf(element) === index;
+    });
     for(let i = 0; i < thisPostImgArr.length; i++){
-    // for(let i = 0; i < thisPostImg.length; i++){
         // Create a reference to the file to delete
-        console.log("i = " + i)
-        console.log(thisPostImgArr[i])
         storageRef.child("images/house" + thisPostId + "/" + thisPostImgArr[i]).delete();                   /* delete firebase storage img */ 
         if(i == thisPostImgArr.length - 1){     
-            console.log("應該是刪完了")                                               /* check if img is  deleted comletely */
+            thisPostImgArr = [];
             database.ref("house/" + thisPostId).remove()                                    /* delete firebase house post */
 
-            for(let j = 0; j < userPostIdArr.length; j++){
+            for(let j = 0; j < getUser["userPost"].length; j++){
                 if(thisPostId == getUser["userPost"][j]){
                     database.ref("member/" + thisUserId + "/userPost/" + j).remove();       /* delete firbase member userPost */
                     thisCard.parentNode.removeChild(thisCard);                              /* remove member post display */
-                    break;
+                    let index = userPostIdArr.indexOf(thisPostId);
+                    userPostIdArr.splice(index, 1)
                 }
+            }
+
+            if(!userPostIdArr.length){
+                app.createElement("p","","","memberPost","目前沒有刊登","");
             }
         }
     }
     app.get("#alertBoxLayout").style.display = "none";
 }
-
-// app.get("#alertBtnConfirm").addEventListener("click",function(){
-    
-// })

@@ -3,6 +3,147 @@ body{
     font-family: Microsoft JhengHei;
 }
 
+/* loading page css */
+.load_page{
+    width: 100%;
+    height: 100%;
+    background-color: #EEEEEE;
+    z-index: 500;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.load_page .load_page_img{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    
+}
+
+.load_page .load_page_img .live_img{
+    width: 100%;
+    height: 100%; 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    
+    /* before */
+    bottom: 16%;
+    
+/*     after */
+/*    bottom: 8%;*/
+}
+
+.load_page .load_page_img .live_img.l{
+    background: url("../images/Live_l.png");
+    background-size: cover;
+    background-position: center;
+    
+    /* before */
+    right: 90%;
+    
+    /* after */
+/*
+    top: 12%;
+    right: 5%;
+*/
+    
+
+}
+
+.load_page .load_page_img .live_img.i{
+    background: url("../images/Live_i.png");
+    background-size: cover;
+    background-position: center;
+    
+    /* before */
+    left: -30%;
+    top: -16%;
+    
+    /* after */
+/*    top: 10%;*/
+/*    left: 37% !important;*/
+    
+
+}
+
+.load_page .load_page_img .live_img.v{
+    background: url("../images/Live_v.png");
+    background-size: cover;
+    background-position: center;
+    
+    /* before */
+    left: 35%;
+/*    right: 10%;*/
+    bottom: 5%;
+    transform: rotate(-180deg);
+    
+    /* after */
+/*    bottom: 40%;*/
+}
+
+.load_page .load_page_img .live_img.e{
+    background: url("../images/Live_e.png");
+    background-size: cover;
+    background-position: center;
+/*
+    width: 240px;
+    height: 240px;
+*/
+
+     /* before */
+    left: 110%;
+    
+    /* after */
+/*    bottom: 0%;*/
+}
+
+@keyframes houseLMove{
+    0%   {top: 12%; right: 5%;}
+/*   17%   {top: 12%; right: 5%;}*/
+    50%   {top: -16%; right: 90%;}
+    100%   {top: 12%; right: 5%;}
+}
+
+@keyframes houseIMove{
+    0%   {top: 10%; left: 37%;}
+/*    25%   {top: 0%; right: 90%;}*/
+    50%   {top: -16%; left: -30%;}
+    100%   {top: 10%; left: 37%;}
+}
+
+@keyframes houseVMove{
+    0%   {left: 0%; bottom: 40%; transform: rotate(0deg)}
+/*    25%   {top: 0%; right: 90%;}*/
+    50%   {left: 35%; bottom: 5%; transform: rotate(-180deg)}
+    100%   {left: 0%; bottom: 40%; transform: rotate(0deg)}
+}
+
+@keyframes houseEMove{
+    0%   {bottom: 0%;}
+    50%   {bottom: 16%; left: 110%;}
+    100%   {bottom: 0%; left: 0%;}
+}
+
+@keyframes houseETurn{
+    from   {transform:  rotate(0deg)}
+/*
+    25%   {transform:  rotate(360deg)}
+    50%   {transform:  rotate(0deg)}
+*/
+    to {transform:  rotate(360deg)}
+}
+
+
 /* nav css */
 .nav{
     display: flex;
@@ -26,16 +167,20 @@ body{
 }
 
 .nav .nav_left .nav_logo{
-    width: 20px;
-    height: 20px;
-    background: url("../images/nav_house.jpg");
+    width: 24px;
+    height: 24px;
+    margin: 0px 8px;
+    background: url("../images/nav_logo.svg");
     background-size: cover;
     background-position: center;
+    cursor: pointer;
 }
 
 .nav .nav_left .nav_title{
-    margin: 0;
-    font-size: 14px;
+    margin: 0 8px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: bold;
 }
 
 .nav .nav_left .nav_search{
@@ -92,7 +237,8 @@ body{
 }
 
 .nav .nav_right .nav_btn:hover{
-    background-color: aqua;
+/*    background-color: aqua;*/
+    color: #00A99D;
 }
 
 .nav .nav_right .nav_btn{
@@ -129,19 +275,18 @@ body{
 @media(min-width: 768px){
     .nav .nav_left{
         width: 90%;
+        margin: 16px
     }
     
     .nav .nav_left .nav_logo{
         width: 30px;
         height: 30px;
-        background: url("../images/nav_house.jpg");
+        background: url("../images/nav_logo.svg");
         background-size: cover;
-        margin: 8px;
     }
 
     .nav .nav_left .nav_title{
-        margin: 0;
-        font-size: 18px;
+        font-size: 22px;
     }
 
     .nav .nav_left .nav_search{
@@ -180,6 +325,10 @@ body{
 
     .nav .nav_right .nav_btn{
         display: inline;
+        width: 100%;
+        height: 100%;
+        line-height: 4em;
+        text-align: center;
         color: white;
         margin: 8px;
         padding: 0px 0px;
@@ -191,7 +340,13 @@ body{
         width: 150px;
         height: 36px;
         border-radius: 4px;
-        border: 1px solid rgb(128, 128, 128)
+        border: 1px solid rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    
+    .nav .nav_right .nav_fav_btn:hover{
+        background-color: #60C9C2;
+        color: white;
     }
 
     .nav .nav_right .nav_fav_btn .nav_fav_img{

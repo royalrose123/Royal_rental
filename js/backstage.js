@@ -1,49 +1,49 @@
-var getData;
-firebaseData = database.ref("house")
-firebaseData.on('value', function(snapshot) {
+let getData;
+firebaseData = database.ref('house');
+firebaseData.on('value', (snapshot) => {
     getData = snapshot.val();
     houseSubmit();
-    console.log("getData")
-    console.log(getData)
+    console.log("getData");
+    console.log(getData);
 });
 
 var getUser;
 var thisUser;
 var thisUserId;
-firebase.auth().onAuthStateChanged(function(user){ 
+firebase.auth().onAuthStateChanged(function (user){ 
     if(user){
         thisUser = user;
         thisUserId = user.uid;
     }
 
-    var firebaseUser = database.ref("member/" + thisUserId)
-    firebaseUser.once("value", function(snapshot){
+    var firebaseUser = database.ref("member/" + thisUserId);
+    firebaseUser.once("value", function (snapshot){
         getUser = snapshot.val();
-        checkMemberData()
+        checkMemberData();
         setMemberData();
-    })
-})
+    });
+});
 
 function checkMemberData(){
     if(!getUser["gender"]){
         app.get("#alertBoxLayout").style.display = "flex";
         app.get("#alertIndex").innerHTML = "請先填寫會員資料。";
         app.get("#alertBtn").style.display = "block";
-        app.get("#alertBtn").onclick = function(){
+        app.get("#alertBtn").onclick = function (){
             window.location = "member.html";
-        }
+        };
     }
 }
 
 /* select imgage */
 var uploadImgs = {};
-app.get("#uploadHouseImg").addEventListener("change", function(){
+app.get("#uploadHouseImg").addEventListener("change", function (){
     readURL(this);
     var file = this.files[0];
-    uploadImgs[currentImg] = file
-    console.log("this")
-    console.log(this)
-})
+    uploadImgs[currentImg] = file;
+    console.log("this");
+    console.log(this);
+});
 
 /* support ID 10, Chrome 7 */
 /* use FileReader to display images */
@@ -52,56 +52,54 @@ let houseImgArr = [];
 let uploadImgArr = {};
 let imgLength;
 function readURL(input){
-    imgLength = app.get("#houseImgRight").children.length - 1
+    imgLength = app.get("#houseImgRight").children.length - 1;
     if(!imgLength){
         currentImg = 0;
         houseImgArr = [];
     }else{
-        let lastImg = app.get("#houseImgRight").children[imgLength]
-        lastImgNo = lastImg.getAttribute("data-no")
+        let lastImg = app.get("#houseImgRight").children[imgLength];
+        lastImgNo = lastImg.getAttribute("data-no");
         currentImg = Number(lastImgNo) + 1;
     }
-    console.log("input")
-    console.log(input.files)
-    houseImgArr.push(currentImg)
+    console.log("input");
+    console.log(input.files);
+    houseImgArr.push(currentImg);
     uploadImgArr[currentImg] = input.files[0]; /* firebase img arr*/
     console.log("uploadImgArr");
-    createImg(currentImg)
+    createImg(currentImg);
     if(input.files && input.files[0]){
         var reader = new FileReader();
         reader.onload = function (e){
             app.get("#houseImg" + currentImg).setAttribute('src', e.target.result);
-            console.log("e")
-            console.log(e)
-        }
+        };
         reader.readAsDataURL(input.files[0]);
     }
 }
 
 function createImg(newImg){
-    app.createElement("div","houseImgContainer" + newImg, "house_img_container", "houseImgRight", "", "")
-    app.createElement("div","houseImgCover" + newImg, "house_img_cover", "houseImgContainer" + newImg, "", "")
-    app.createElement("img","houseImg" + newImg, "house_img", "houseImgContainer" + newImg, "", "")
-    app.createElement("div","houseImgDelete" + newImg, "house_img_delete", "houseImgCover" + newImg, "x", app.backstage.deleteImg)
-    app.get("#houseImgContainer" + newImg).setAttribute("data-no", newImg)
-    app.get("#houseImgDelete" + newImg).setAttribute("data-delete", newImg)
+    app.createElement("div","houseImgContainer" + newImg, "house_img_container", "houseImgRight", "", "");
+    app.createElement("div","houseImgCover" + newImg, "house_img_cover", "houseImgContainer" + newImg, "", "");
+    app.createElement("img","houseImg" + newImg, "house_img", "houseImgContainer" + newImg, "", "");
+    app.createElement("div","houseImgDelete" + newImg, "house_img_delete", "houseImgCover" + newImg, "x", app.backstage.deleteImg);
+    app.get("#houseImgContainer" + newImg).setAttribute("data-no", newImg);
+    app.get("#houseImgDelete" + newImg).setAttribute("data-delete", newImg);
 }
 
 app.backstage.deleteImg = (e) => {
-    let thisImgNo = e.target.getAttribute("data-delete")
-    let thisImg = app.get("#houseImgContainer" + thisImgNo)
-    thisImg.remove()
+    let thisImgNo = e.target.getAttribute("data-delete");
+    let thisImg = app.get("#houseImgContainer" + thisImgNo);
+    thisImg.remove();
     for(let i = 0; i < houseImgArr.length; i++){
         if(houseImgArr[i] == thisImgNo){
-          houseImgArr.splice(i, 1)
+          houseImgArr.splice(i, 1);
         }
     }
     delete uploadImgArr[thisImgNo];
-}
+};
 
 function setMemberData(){
     app.get("#userName").value = getUser["userName"];
-    app.get("#userName").className = "user_name disabled"
+    app.get("#userName").className = "user_name disabled";
     app.get("#userName").setAttribute("disabled","");
 }
 
@@ -109,13 +107,13 @@ function setMemberData(){
 let addressData;
 function addressToLatLng(address){
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': address}, function(results, status){
+    geocoder.geocode({ 'address': address}, function (results, status){
         if(status === "OK"){
-            console.log("status")
-            console.log(status)
-            localStorage.setItem("address",JSON.stringify(results[0])) 
+            console.log("status");
+            console.log(status);
+            localStorage.setItem("address",JSON.stringify(results[0])); 
         }
-    })
+    });
 }
 
 /* house submit */
@@ -129,12 +127,10 @@ let kindTypeName;
 
 
 function houseSubmit(){
-    // var kindTypeName;
     var kindType;
     
-    app.get("#houseSubmit").addEventListener("click", function(){
+    app.get("#houseSubmit").addEventListener("click", function (){
 
-        // let kindTypeName;
         kindType = document.getElementsByName("kindType");
         for(let i = 0; i < kindType.length; i++){
             if(kindType[i].checked){
@@ -145,17 +141,17 @@ function houseSubmit(){
         if(!kindTypeName){
             app.get("#alertBoxLayout").style.display = "flex";
             app.get("#alertIndex").innerHTML = "請選擇類型";
-            return
+            return;
         }
 
 
         let address = regionName.value + sectionName.value + streetName.value;
-        addressToLatLng(address)
+        addressToLatLng(address);
         
         if(!getData){
             thisPostId = 0;
         }else{
-            prevPostId = getData[getData.length - 1]["postId"]
+            prevPostId = getData[getData.length - 1]["postId"];
             thisPostId = Number(prevPostId) + 1;
         }
 
@@ -167,9 +163,9 @@ function houseSubmit(){
             let uploadImg = storageRef.child("images/" + "house" + thisPostId + "/house" + thisPostId + "_" + img).put(uploadImgArr[img]);
 
         //     Listen for state changes, errors, and completion of the upload.
-            uploadImg.on("state_changed",function(snapshot) {
+            uploadImg.on("state_changed",function (snapshot) {
                 var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(progress)
+                console.log(progress);
                 switch(progress){
                     case 0:
                         break;
@@ -184,7 +180,7 @@ function houseSubmit(){
         //                console.log('Upload is running');
                         break;
                 }
-            }, function(error) {
+            }, function (error) {
             // A full list of error codes is available at
             // https://firebase.google.com/docs/storage/web/handle-errors
                 switch (error.code) {
@@ -198,40 +194,31 @@ function houseSubmit(){
                         console.log(error);
                         break;
                 }
-            }, function() {
+            }, function () {
                 let pathReference = storageRef.child("images/" + "house" + thisPostId + "/house" + thisPostId + "_" + img);
-                pathReference.getDownloadURL().then(function(url) {
+                pathReference.getDownloadURL().then(function (url) {
                     // getFirebaseURL.push(url);
-                    getFirebaseURL["house" + thisPostId + "_" + img] = url
+                    getFirebaseURL["house" + thisPostId + "_" + img] = url;
                     count++;
                     if(count === houseImgArr.length){
                         addressData = JSON.parse(localStorage.getItem("address"));
                         setHouseData();
                         setTimeout(
-                            function(){
-                                window.location = "member.html"
+                            function (){
+                                window.location = "member.html";
                             },3000);
                     }
-                })
-            })
+                });
+            });
             app.get("#alertBoxLayout").style.display = "flex";
             app.get("#alertBtn").style.display = "none";
             app.get("#alertIndex").innerHTML = "上傳中，請稍等。";
-        })
-    }) 
+        });
+    }); 
 //        
 }
 
 function setHouseData(){
-//    console.log("thisPostId");
-//    console.log(thisPostId);
-    console.log("houseImages")
-    console.log(houseImages)
-    // let kindTypeName;
-    // let kindType = document.getElementsByName("kindType");
-    
-    
-        
     let deviceObj = {};
     let device = document.getElementsByName("deviceCheck");
     for(let i = 0; i < device.length; i++){
@@ -251,11 +238,11 @@ function setHouseData(){
     }
 
     let requireObj = {};
-    let require = document.getElementsByClassName("require")
+    let require = document.getElementsByClassName("require");
     for(let i = 0; i < require.length; i++){
         if(!require[i].value){
-            alert("請輸入" + require[i].name )
-            return
+            alert("請輸入" + require[i].name );
+            return;
         }
         requireObj[require[i].name] = require[i].value;
     }
@@ -290,7 +277,7 @@ function setHouseData(){
         createTime: dateObject.getTime(),
         lastUpdateTime: dateObject.getTime(),
         houseQuestion: []
-    })
+    });
 
     let preUserPost = getUser["userPost"];
     if(!preUserPost){
@@ -302,12 +289,11 @@ function setHouseData(){
 
     database.ref("member/" + thisUserId).update({
         userPost: preUserPost,
-    })
-//    uploadImg()
+    });
     app.get("#alertIndex").innerHTML = "刊登成功";
     app.get("#alertBtn").style.display = "block";
-    app.get("#alertBtn").onclick = function(){
+    app.get("#alertBtn").onclick = function (){
         window.location = "member.html";
-    }
-    // setTimeout(window.location = "member.html",3000);
+    };
+    setTimeout(window.location = "member.html",3000);
 }

@@ -354,13 +354,12 @@ function updateHouseData(){
     app.get("#alertIndex").innerHTML = "修改成功";
     app.get("#alertBtn").style.display = "block";
     app.get("#alertBtn").onclick = function(){
-        location.href= "edit.html?id=" + thisPostId;
+        location.href= "member.html";
     }
 
     setTimeout(
         function(){
             window.location = "edit.html?id=" + thisPostId;
-            console.log(thisPostId)
         },3000);
 }
 

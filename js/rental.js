@@ -83,12 +83,13 @@ firebaseMember.on("value", function(snapshot){
     if(checkUser){
         getMember = snapshot.val();
         getMember = getMember[checkUser.uid]
-        userFavPost = getMember["favPost"];
-        if(!userFavPost) userFavPost = [];
-    }else{
-        userFavPost = [];
+        console.log(getMember)
+        if(!getMember["favPost"]){
+            userFavPost = [];
+        } else{
+            userFavPost = getMember["favPost"];
+        }
     }
-    
 })  
 
 function isPointInRange(point){
@@ -123,7 +124,6 @@ firebaseData.on("value", function(snapshot){
             }
         }
       });
-      
     
     if(!getNewData) {
         createPostData(getData)
@@ -178,8 +178,8 @@ function setMarkOnMap(addressData){
             height: 40,
             width: 40,
             anchor: [0, 0],    // 文字出現在標記上的哪個位置 (position on marker)
-            textColor: 'red',
-            textSize: 16,
+            textColor: '#FFF76F',
+            textSize: 14,
             textAlign: "center",
             backgroundPosition: "center",
             backgroundSize: "center",
@@ -221,7 +221,6 @@ function createPostData(data){
                 app.get("#favHeart" + currentPostId).className = "fav_heart active"
             }
         }
-        
         app.createElement("p", "", "", "houseDetail" + i, data[i]["bedroom"] + "間房間, " + data[i]["restroom"] + "間廁所, " + data[i]["kindType"], "");
         app.createElement("p", "", "", "houseDetail" + i, data[i]["section_name"], "");
     }
@@ -529,8 +528,6 @@ function getFilterData(){
         createPostData(priceFilterData);
         app.get("#resultTitle").innerHTML = priceFilterData.length + "筆結果";
     }
-
-    
 }
 
 /* price filter */
@@ -560,7 +557,7 @@ container.addEventListener("touchmove", drag, false);
 
 container.addEventListener("mousedown", dragStart, false);
 container.addEventListener("mouseup", dragEnd, false);
-// container.addEventListener("mouseleave", dragEnd, false);
+container.addEventListener("mouseleave", dragEnd, false);
 container.addEventListener("mousemove", drag, false);
 
 function dragStart(e) {
@@ -634,7 +631,7 @@ function drag(e) {
                 currentX = 0;
             }
             rightOffsetX = xOffset;
-            rightMoney.textContent = Math.round(currentX * ((bottomWidth - 48) / 50000) * 100) * 500 +100000;;
+            rightMoney.textContent = Math.round(currentX * ((bottomWidth - 48) / 50000) * 100) * 500 + 100000;;
         }
         
         setTranslate(currentX, 0, dragItem);

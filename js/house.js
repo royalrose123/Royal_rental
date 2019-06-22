@@ -6,15 +6,12 @@ firebaseData.on("value", function(snapshot){
     getThisArticle();
     createHouseLeft();
     createHouseRight();
-    console.log("thisData")
-    console.log(thisData)
 })
 
 let getUser;
 let thisUserId;
 function getThisArticle(){
     var thisPostId = new URL(document.location).searchParams.get("id");
-    console.log("thisPostId = " + thisPostId)
     for(i = 0; i < getData.length; i++){
         if(getData[i]["postId"] == thisPostId ){
             thisData.push(getData[i])
@@ -47,15 +44,13 @@ function createSelectorImg(){
     for(var key in thisData[0]["houseImg"]){
         thisDataImgArr.push(key);
     }
-    console.log("thisDataImgArr")
-    console.log(thisDataImgArr)
     for(i = 0; i < 5; i++){
         app.createElement("div", "houseImgSelector" + i, "house_img_selector", "houseImgSelectorContainer","", showThisImg);
         app.get("#houseImgSelector" + i).style.background = "url('" + thisData[0]["houseImg"][thisDataImgArr[i]] + "') 50% / cover no-repeat";
         app.get("#houseImgSelector" + i).setAttribute("data-no",i);
     }
     let thisImg = app.get("#displayHouseImg").getAttribute("data-img");
-    app.get("#houseImgSelector" + thisImg).style.border = "1px solid orange"
+    app.get("#houseImgSelector" + thisImg).style.border = "1px solid #B87333"
     app.get("#displayHouseImg").style.background = app.get("#houseImgSelector" + thisImg).style.background
 }
 
@@ -68,7 +63,7 @@ function showThisImg(e){
     if(originImg === thisImg){
         return
     }else{
-        app.get("#houseImgSelector" + thisImg).style.border = "1px solid orange"
+        app.get("#houseImgSelector" + thisImg).style.border = "1px solid #B87333"
         app.get("#houseImgSelector" + originImg).style.border = "none"  
     }
     originImg = thisImg;
