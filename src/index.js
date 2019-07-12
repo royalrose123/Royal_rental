@@ -171,7 +171,7 @@ function setMarkOnMap(addressData) {
 
     //        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
     styles: [{
-      url: '../images/circle.png', // 可以自訂圖案
+      url: 'https://firebasestorage.googleapis.com/v0/b/royal-rental.appspot.com/o/circle.png?alt=media&token=b475f760-d413-46dc-8de3-a6117e9d7fdd', // 可以自訂圖案
       height: 40,
       width: 40,
       anchor: [0, 0], // 文字出現在標記上的哪個位置 (position on marker)
