@@ -81,6 +81,8 @@ function createNav() {
     app.createElement('input', 'navSearch', 'nav_search', 'navLeft', '', '');
     // app.get("#navSearch").setAttribute("autocomplete","off")
     app.get('#navSearch').setAttribute('placeholder', '請問想住哪呢?');
+  }else{
+    console.log("not cool")
   }
 
 
