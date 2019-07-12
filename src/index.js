@@ -147,7 +147,7 @@ function setMarkOnMap(addressData) {
       position: addressData[i].latLng, // marker的放置位置
       map, // 這邊的map指的是第四行的map變數
       title: addressData[i].title,
-      icon: '../images/company.png',
+      icon: '/images/company.png',
     });
     markers.push(marker);
     marker.addListener('click', () => {
