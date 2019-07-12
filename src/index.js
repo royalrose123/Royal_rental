@@ -147,7 +147,7 @@ function setMarkOnMap(addressData) {
       position: addressData[i].latLng, // marker的放置位置
       map, // 這邊的map指的是第四行的map變數
       title: addressData[i].title,
-      icon: '/images/company.png',
+      icon: 'https://firebasestorage.googleapis.com/v0/b/royal-rental.appspot.com/o/company.png?alt=media&token=4079d0ad-6be1-49e7-a45a-a1d94b510c66',
     });
     markers.push(marker);
     marker.addListener('click', () => {
