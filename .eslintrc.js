@@ -9,6 +9,10 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    firebase: 'readonly',
+    firebaseData: 'true',
+    database: 'readonly',
+    app: 'true',
   },
   parserOptions: {
     ecmaVersion: 2018,
