@@ -168,7 +168,7 @@ function setMarkOnMap(addressData) {
   markerCluster = new MarkerClusterer(map, markers, {
     gridSize: 180,
     maxZoom: 16,
-    imagePath: 'https://firebasestorage.googleapis.com/v0/b/royal-rental.appspot.com/o/circle.png?alt=media&token=b475f760-d413-46dc-8de3-a6117e9d7fdd',
+    imagePath: '../images/circle.png',
     styles: [{
       // url: 'https://firebasestorage.googleapis.com/v0/b/royal-rental.appspot.com/o/circle.png?alt=media&token=b475f760-d413-46dc-8de3-a6117e9d7fdd', // 可以自訂圖案
       height: 40,
