@@ -74,9 +74,10 @@ function createNav() {
   app.createElement('p', 'navTitle', 'nav_title', 'navLeft', 'Live Life', '');
   
   const page = new URL(document.location).pathname;
-  console.log("page")
+  console.log("page 11")
   console.log(page)
   if (page === '/Royal_rental/index.html') {
+    console.log("cool")
     app.createElement('input', 'navSearch', 'nav_search', 'navLeft', '', '');
     // app.get("#navSearch").setAttribute("autocomplete","off")
     app.get('#navSearch').setAttribute('placeholder', '請問想住哪呢?');
