@@ -72,8 +72,10 @@ function createNav() {
     location.href = 'index.html';
   });
   app.createElement('p', 'navTitle', 'nav_title', 'navLeft', 'Live Life', '');
-
+  
   const page = new URL(document.location).pathname;
+  console.log("page")
+  console.log(page)
   if (page === '/index.html') {
     app.createElement('input', 'navSearch', 'nav_search', 'navLeft', '', '');
     // app.get("#navSearch").setAttribute("autocomplete","off")
