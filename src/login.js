@@ -118,7 +118,7 @@ app.log.gmailLogin = function (){
       app.get('#alertBoxLayout').style.display = 'flex';
       app.get('#alertIndex').innerHTML = '登入中';
       setUserOnFirebase();
-      // setTimeout(windowReload,3000);
+      setTimeout(windowReload,3000);
     }
   }).catch(function (error) {
     // Handle Errors here.
