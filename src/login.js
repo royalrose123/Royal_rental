@@ -26,8 +26,8 @@ app.get('#loginBtn').addEventListener('click', () => {
 });
 
 app.log.createAccount = function (){
-  createEmail = loginMail.value;
-  createPassword = loginPassword.value;
+  let createEmail = loginMail.value;
+  let createPassword = loginPassword.value;
 
   firebase.auth().createUserWithEmailAndPassword(createEmail, createPassword).then(checkLogIn()).catch(function (error) {
     console.log(error.code);
@@ -43,9 +43,28 @@ app.log.createAccount = function (){
     }
   });
 };
-
 let userLogin;
-// var getError = false;
+function checkLogIn(){
+  firebase.auth().onAuthStateChanged(function (user){
+    if (user){
+      console.log("checkLogIn user")
+      console.log(user);
+      userLogin = user;
+      user.sendEmailVerification().then(function (){
+        app.get('#alertBoxLayout').style.display = 'flex';
+        app.get('#alertIndex').innerHTML = '已寄信，請前往驗證。';
+      });
+    } else {
+      userLogin = null;
+    }
+  }, function (error){
+    console.log("checkLogIn")
+    console.log(error)
+  });
+}
+
+
+// let getError = false;
 
 app.log.logInClick = function (){
   firebase.auth().onAuthStateChanged(function (user){
@@ -160,20 +179,7 @@ function setUserOnFirebase(){
   });
 }
 
-function checkLogIn(){
-  firebase.auth().onAuthStateChanged(function (user){
-    if (user){
-      console.log(user);
-      userLogin = user;
-      user.sendEmailVerification().then(function (){
-        app.get('#alertBoxLayout').style.display = 'flex';
-        app.get('#alertIndex').innerHTML = '已寄信，請前往驗證。';
-      });
-    } else {
-      userLogin = null;
-    }
-  }, function (error){});
-}
+
 
 
 /* log alert box */
