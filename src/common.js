@@ -1,14 +1,21 @@
 let checkUser;
 firebase.auth().onAuthStateChanged((user) => {
   checkUser = user;
-  if (user) {
-    if (user.emailVerified) {
+  if (checkUser) {
+    if (checkUser.emailVerified) {
+      console.log("已驗證")
       app.get('#loginBtn').style.display = 'none';
       app.get('#memberBtn').style.display = 'block';
-    }
+    
   } else {
+    console.log("未驗證")
+
     app.get('#loginBtn').style.display = 'block';
     app.get('#memberBtn').style.display = 'none';
+    // firebase.auth().signOut();
+  }
+  console.log("checkUser")
+  console.log(checkUser)
   }
 });
 
@@ -87,6 +94,7 @@ function createNav() {
   app.createElement('li', 'rentalBtn', 'nav_btn', 'navList', '找房', '');
   app.createElement('li', 'postBtn', 'nav_btn', 'navList', '刊登', '');
   app.createElement('li', 'memberBtn', 'nav_btn', 'navList', '會員', '');
+  app.get("#memberBtn").style.display = 'none';
   app.createElement('li', 'loginBtn', 'nav_btn', 'navList', '登入', '');
   app.createElement('i', 'navBtn', 'fas fa-bars', 'navRight', '', '');
 

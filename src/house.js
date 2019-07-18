@@ -27,12 +27,14 @@ function getThisArticle() {
 
 /* house left */
 function createHouseLeft() {
+  
   createSelectorImg();
   createHouseData();
 }
 
 const thisDataImgArr = [];
 function createSelectorImg() {
+  
   app.createElement('div', 'displayHouseImg', 'display_house_img', 'houseImgContainer', '', '');
   app.get('#displayHouseImg').setAttribute('data-img', 0);
   app.createElement('div', 'slideLeftContainer', 'slide_left_container', 'displayHouseImg', '', slideLeft);

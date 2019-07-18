@@ -527,7 +527,7 @@
     }
     
     .rental .rental_right{
-        width: 600px;
+        width: 100%;
         padding: 0px;
     }
     
@@ -610,6 +610,10 @@
 }
 
 @media(max-width: 768px){
+    /* .rental .rental_right{
+        width: 100%;
+    } */
+
     .rental .rental_right .rental_filter{
         width: 100%;
         padding: 0px;
